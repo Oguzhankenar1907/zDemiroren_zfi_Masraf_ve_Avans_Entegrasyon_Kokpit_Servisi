@@ -3,7 +3,11 @@
   "sap.app": {
     "id": "com.golive.demiroren.zficspkokpit",
     "type": "application",
-    "i18n": "i18n/i18n.properties",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": [""],
+      "fallbackLocale": ""
+    },
     "applicationVersion": {
       "version": "0.0.1"
     },
@@ -22,13 +26,14 @@
         "settings": {
           "annotations": [],
           "localUri": "localService/mainService/metadata.xml",
-          "odataVersion": "4.01"
+          "odataVersion": "4.0"
         }
       }
     }
   },
   "sap.ui": {
     "technology": "UI5",
+    "fullWidth": true,
     "icons": {
       "icon": "",
       "favIcon": "",
@@ -50,9 +55,7 @@
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
-        "sap.f": {},
         "sap.ui.layout": {},
-        "sap.ui.table": {},
         "sap.ui.export": {}
       }
     },
@@ -64,7 +67,11 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "com.golive.demiroren.zficspkokpit.i18n.i18n"
+          "bundleName": "com.golive.demiroren.zficspkokpit.i18n.i18n",
+          "supportedLocales": [
+            ""
+          ],
+          "fallbackLocale": ""
         }
       },
       "": {
@@ -76,13 +83,6 @@
           "earlyRequests": true
         }
       }
-    },
-    "resources": {
-      "css": [
-        {
-          "uri": "css/style.css"
-        }
-      ]
     },
     "routing": {
       "config": {

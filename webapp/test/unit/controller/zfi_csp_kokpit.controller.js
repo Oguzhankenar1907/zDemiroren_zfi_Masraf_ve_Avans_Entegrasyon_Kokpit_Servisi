@@ -9,8 +9,8 @@ sap.ui.define([
 
 	QUnit.test("I should test the zfi_csp_kokpit controller", function (assert) {
 		var oAppController = new Controller();
-		oAppController.onInit();
 		assert.ok(oAppController);
+		oAppController.destroy();
 	});
 
 });

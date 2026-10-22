@@ -1,0 +1,224 @@
+<?xml version="1.0" ?>
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+    <Dialog id="cockpitDetail" title="{detail&gt;/title}" contentWidth="96%" contentHeight="80%" resizable="true" draggable="true" horizontalScrolling="false">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Toolbar>
+                    <Title text="Form Bilgileri"/>
+                    <ToolbarSpacer/>
+                    <Button text="Yenile" press="onDetailRefresh"/>
+                </Toolbar>
+                <form:SimpleForm editable="false" layout="ResponsiveGridLayout" columnsXL="3" columnsL="3" columnsM="2" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" singleContainerFullSize="false">
+                    <form:content>
+                        <core:Title text="Form Bilgileri"/>
+                        <Label text="Şirket"/>
+                        <Text text="{detail&gt;/header/SirketKodu}"/>
+                        <Label text="Akış"/>
+                        <Text text="{detail&gt;/header/AkisNumarasi}"/>
+                        <Label text="Form"/>
+                        <Text text="{detail&gt;/header/FormNumarasi}"/>
+                        <Label text="Süreç"/>
+                        <Text text="{path:'detail&gt;/header/SurecTipi', formatter:'.formatter.process'}"/>
+                        <Label text="Masraf Türü"/>
+                        <Text text="{path:'detail&gt;/header/AvansTuru', formatter:'.formatter.kind'}"/>
+                        <Label text="Yurtiçi/Yurtdışı"/>
+                        <Text text="{path:'detail&gt;/header/YurticiYurtdisi', formatter:'.formatter.area'}"/>
+                        <Label text="Avans Form Numarası"/>
+                        <Text text="{detail&gt;/header/AvansFormNumarasi}"/>
+                        <core:Title text="Personel ve Tarihler"/>
+                        <Label text="TCKN"/>
+                        <Text text="{detail&gt;/header/Tckn}"/>
+                        <Label text="Sicil"/>
+                        <Text text="{detail&gt;/header/SicilNo}"/>
+                        <Label text="Belge Tarihi"/>
+                        <Text text="{detail&gt;/header/BelgeTarihi}"/>
+                        <Label text="Kayıt Tarihi"/>
+                        <Text text="{detail&gt;/header/KayitTarihi}"/>
+                        <core:Title text="Muhasebe Belgeleri"/>
+                        <Label text="Talep Belgesi"/>
+                        <Text text="{detail&gt;/header/TalepBelge}"/>
+                        <Label text="Talep Yılı"/>
+                        <Text text="{detail&gt;/header/TalepYil}"/>
+                        <Label text="Ödeme Belgesi"/>
+                        <Text text="{detail&gt;/header/OdemeBelge}"/>
+                        <Label text="Muhasebe Belgesi"/>
+                        <Text text="{detail&gt;/header/MuhasebeBelge}"/>
+                        <Label text="Muhasebe Yılı"/>
+                        <Text text="{detail&gt;/header/MuhasebeYil}"/>
+                        <Label text="Ters Belge"/>
+                        <Text text="{detail&gt;/header/TersBelge}"/>
+                        <Label text="Ters Yıl"/>
+                        <Text text="{detail&gt;/header/TersYil}"/>
+                    </form:content>
+                </form:SimpleForm>
+                <MessageStrip text="{detail&gt;/header/HataMesaji}" type="Error" showIcon="true" visible="{= !!${detail&gt;/header/HataMesaji} }" class="sapUiSmallMarginBottom"/>
+                <Text text="{detail&gt;/messages}"/>
+                <Title text="Kalemler" class="sapUiSmallMarginTop sapUiSmallMarginBottom" level="H3"/>
+                <ScrollContainer width="100%" horizontal="true" vertical="false" focusable="true">
+                    <Table id="detailItems" growing="true" growingThreshold="50" width="301rem" fixedLayout="true" noDataText="Kayıt bulunamadı.">
+                        <columns>
+                            <Column width="7rem">
+                                <Text text="Şirket" wrapping="false"/>
+                            </Column>
+                            <Column width="14rem">
+                                <Text text="Akış" wrapping="false"/>
+                            </Column>
+                            <Column width="14rem">
+                                <Text text="Form" wrapping="false"/>
+                            </Column>
+                            <Column width="22rem">
+                                <Text text="Fatura" wrapping="false"/>
+                            </Column>
+                            <Column width="7rem">
+                                <Text text="Sıra" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Durum" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem" hAlign="End">
+                                <Text text="Tutar" wrapping="false"/>
+                            </Column>
+                            <Column width="7rem">
+                                <Text text="Para Birimi" wrapping="false"/>
+                            </Column>
+                            <Column width="18rem">
+                                <Text text="Masraf Tanımı" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Masraf Yeri" wrapping="false"/>
+                            </Column>
+                            <Column width="26rem">
+                                <Text text="Açıklama" wrapping="false"/>
+                            </Column>
+                            <Column width="26rem">
+                                <Text text="Mesaj" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Masraf Tipi" wrapping="false"/>
+                            </Column>
+                            <Column width="22rem">
+                                <Text text="PYP" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem" hAlign="End">
+                                <Text text="KDV (%)" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Araç Gider Türü" wrapping="false"/>
+                            </Column>
+                            <Column width="7rem">
+                                <Text text="E-Fatura" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="E-Fatura Carisi" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Virman Belgesi" wrapping="false"/>
+                            </Column>
+                            <Column width="7rem">
+                                <Text text="Virman Yılı" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Gider Belgesi" wrapping="false"/>
+                            </Column>
+                            <Column width="7rem">
+                                <Text text="Gider Yılı" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Ters Belge" wrapping="false"/>
+                            </Column>
+                            <Column width="7rem">
+                                <Text text="Ters Yıl" wrapping="false"/>
+                            </Column>
+                        </columns>
+                        <dependents>
+                            <ColumnListItem id="detailRow" vAlign="Middle">
+                                <cells>
+                                    <Text text="{_Header/SirketKodu}"/>
+                                    <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
+                                    <Text text="{path:'_Header/FormNumarasi', targetType:'any'}" wrapping="false"/>
+                                    <Text text="{FaturaId}"/>
+                                    <Text text="{path:'OrderId', targetType:'any'}" wrapping="false"/>
+                                    <ObjectStatus text="{parts:[{path:'Zcheck'},{path:'KalemDurum'},{path:'_Header/Durum'}], formatter:'.formatter.itemStatus'}" state="{parts:[{path:'Zcheck'},{path:'KalemDurumCriticality'},{path:'_Header/DurumCriticality'}], formatter:'.formatter.itemState'}"/>
+                                    <Text text="{Tutar}"/>
+                                    <Text text="{ParaBirimi}"/>
+                                    <Text text="{MasrafTipiTanim}"/>
+                                    <Text text="{MasrafYeri}"/>
+                                    <Text text="{Aciklama}" maxLines="3" tooltip="{Aciklama}"/>
+                                    <Text text="{parts:[{path:'Zcheck'},{path:'HataMesaji'},{path:'_Header/HataMesaji'}], formatter:'.formatter.itemValue'}" maxLines="3" tooltip="{HataMesaji}"/>
+                                    <Text text="{MasrafTipi}"/>
+                                    <Text text="{PYPKodu}"/>
+                                    <Text text="{KdvOrani}"/>
+                                    <Text text="{AracGiderTuru}"/>
+                                    <Text text="{Zcheck}"/>
+                                    <Text text="{EfaturaCari}"/>
+                                    <Text text="{VirmanBelge}"/>
+                                    <Text text="{VirmanYil}"/>
+                                    <Text text="{GiderBelge}"/>
+                                    <Text text="{GiderYil}"/>
+                                    <Text text="{TersBelge}"/>
+                                    <Text text="{TersYil}"/>
+                                </cells>
+                            </ColumnListItem>
+                        </dependents>
+                    </Table>
+                </ScrollContainer>
+                <Title text="İşlem Geçmişi" class="sapUiSmallMarginTop sapUiSmallMarginBottom" level="H3"/>
+                <ScrollContainer width="100%" horizontal="true" vertical="false" focusable="true">
+                    <Table id="detailHistory" growing="true" growingThreshold="50" width="128rem" fixedLayout="true" noDataText="Kayıt bulunamadı.">
+                        <columns>
+                            <Column width="7rem">
+                                <Text text="Sıra" wrapping="false"/>
+                            </Column>
+                            <Column width="22rem">
+                                <Text text="Fatura" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="İşlem" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Sonuç" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Belge" wrapping="false"/>
+                            </Column>
+                            <Column width="7rem">
+                                <Text text="Yıl" wrapping="false"/>
+                            </Column>
+                            <Column width="26rem">
+                                <Text text="Mesaj" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Kullanıcı" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Tarih" wrapping="false"/>
+                            </Column>
+                            <Column width="11rem">
+                                <Text text="Saat" wrapping="false"/>
+                            </Column>
+                        </columns>
+                        <dependents>
+                            <ColumnListItem id="historyRow" vAlign="Middle">
+                                <cells>
+                                    <Text text="{Sira}"/>
+                                    <Text text="{FaturaId}"/>
+                                    <Text text="{Islem}"/>
+                                    <ObjectStatus text="{path:'Sonuc', formatter:'.formatter.result'}" state="{path:'Sonuc', formatter:'.formatter.resultState'}"/>
+                                    <Text text="{Belnr}"/>
+                                    <Text text="{Gjahr}"/>
+                                    <Text text="{Mesaj}" maxLines="3" tooltip="{Mesaj}"/>
+                                    <Text text="{Usnam}"/>
+                                    <Text text="{Datum}"/>
+                                    <Text text="{Uzeit}"/>
+                                </cells>
+                            </ColumnListItem>
+                        </dependents>
+                    </Table>
+                </ScrollContainer>
+            </VBox>
+        </content>
+        <endButton>
+            <Button text="Kapat" press="onCloseDetail"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
