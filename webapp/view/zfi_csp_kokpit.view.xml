@@ -1,6 +1,523 @@
-<mvc:View controllerName="com.golive.demiroren.zficspkokpit.controller.zfi_csp_kokpit"
+<mvc:View
+    controllerName="com.golive.demiroren.zficspkokpit.controller.zfi_csp_kokpit"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-    </Page>
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    height="100%">
+
+    <f:DynamicPage id="dynamicPage" headerExpanded="true" showFooter="false" fitContent="true">
+        <!-- Dynamic Page Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>title}" level="H2"/>
+                </f:heading>
+                <f:breadcrumbs>
+                    <Breadcrumbs>
+                        <Link text="Demirören FI" />
+                        <Link text="Personel Masraf ve Avans" />
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+                <f:expandedContent>
+                    <Label text="Masraf, Avans ve E-Fatura Entegrasyon ve Muhasebeleştirme Kokpiti" />
+                </f:expandedContent>
+                <f:snappedContent>
+                    <Label text="Masraf, Avans ve E-Fatura Kokpiti" />
+                </f:snappedContent>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <!-- Dynamic Page Header (Filter Bar) -->
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <layout:Grid defaultSpan="XL3 L4 M6 S12" class="sapUiSmallMargin">
+                    <!-- Şirket Kodu (Zorunlu) -->
+                    <VBox>
+                        <Label text="{i18n>lblSirketKodu}" required="true" />
+                        <Input id="fbSirketKodu" placeholder="Örn: 1000" maxLength="4" submit="onSearch" />
+                    </VBox>
+
+                    <!-- Akış Numarası -->
+                    <VBox>
+                        <Label text="{i18n>lblAkisNumarasi}" />
+                        <Input id="fbAkisNumarasi" placeholder="Örn: 10000001" type="Number" submit="onSearch" />
+                    </VBox>
+
+                    <!-- Form Numarası -->
+                    <VBox>
+                        <Label text="{i18n>lblFormNumarasi}" />
+                        <Input id="fbFormNumarasi" placeholder="Örn: 10001" type="Number" submit="onSearch" />
+                    </VBox>
+
+                    <!-- Belge Tarihi Aralığı -->
+                    <VBox>
+                        <Label text="{i18n>lblBelgeTarihi}" />
+                        <DateRangeSelection id="fbBelgeTarihi" displayFormat="dd.MM.yyyy" valueFormat="yyyy-MM-dd" />
+                    </VBox>
+
+                    <!-- TCKN / Vergi No -->
+                    <VBox>
+                        <Label text="{i18n>lblTckn}" />
+                        <Input id="fbTckn" placeholder="TCKN veya Vergi No" maxLength="11" submit="onSearch" />
+                    </VBox>
+
+                    <!-- Durum Çoklu Seçim -->
+                    <VBox>
+                        <Label text="{i18n>lblDurum}" />
+                        <MultiComboBox id="fbDurum" placeholder="Tüm Durumlar">
+                            <core:Item key="T" text="{i18n>status_T}" />
+                            <core:Item key="O" text="{i18n>status_O}" />
+                            <core:Item key="M" text="{i18n>status_M}" />
+                            <core:Item key="H" text="{i18n>status_H}" />
+                            <core:Item key="S" text="{i18n>status_S}" />
+                            <core:Item key="R" text="{i18n>status_R}" />
+                        </MultiComboBox>
+                    </VBox>
+
+                    <!-- Silinenleri Göster -->
+                    <VBox justifyContent="End">
+                        <CheckBox id="fbSilinenler" text="{i18n>lblSilinenler}" select="onSearch" />
+                    </VBox>
+
+                    <!-- Filtre Butonları -->
+                    <HBox justifyContent="End" alignItems="End">
+                        <Button text="{i18n>btnSearch}" type="Emphasized" icon="sap-icon://search" press="onSearch" class="sapUiTinyMarginEnd" />
+                        <Button text="{i18n>btnReset}" icon="sap-icon://clear-filter" press="onResetFilters" />
+                    </HBox>
+                </layout:Grid>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <!-- Dynamic Page Content -->
+        <f:content>
+            <IconTabBar id="iconTabBar" expanded="true" applyContentPadding="false" select="onTabSelect">
+                <items>
+                    <!-- ========================================== -->
+                    <!-- TAB 1: AVANS                               -->
+                    <!-- ========================================== -->
+                    <IconTabFilter
+                        id="tabFilterAvans"
+                        key="A"
+                        text="{i18n>tabAvans}"
+                        icon="sap-icon://money-bills"
+                        iconColor="Neutral">
+                        
+                        <Table
+                            id="tableAvans"
+                            mode="SingleSelectLeft"
+                            selectionChange="onAvansSelectionChange"
+                            sticky="ColumnHeaders,HeaderToolbar"
+                            inset="false"
+                            growing="true"
+                            growingThreshold="25"
+                            items="{
+                                path: '/Form',
+                                parameters: {
+                                    $filter: 'SurecTipi eq \'A\''
+                                }
+                            }">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <Title text="{i18n>tabAvans}" level="H3"/>
+                                    <ToolbarSpacer/>
+                                    <Button
+                                        id="btnAvansOlustur"
+                                        text="{i18n>btnAvansOlustur}"
+                                        type="Emphasized"
+                                        icon="sap-icon://request"
+                                        press="onAvansTalebiOlustur"
+                                        enabled="{viewModel>/avansButtons/olustur}"/>
+                                    <Button
+                                        id="btnAvansTersKayit"
+                                        text="{i18n>btnTersKayit}"
+                                        icon="sap-icon://undo"
+                                        press="onFormTersKayit"
+                                        enabled="{viewModel>/avansButtons/tersKayit}"/>
+                                    <Button
+                                        id="btnAvansSilmeKoy"
+                                        text="{i18n>btnSilmeKoy}"
+                                        type="Reject"
+                                        icon="sap-icon://delete"
+                                        press="onFormSilmeKoy"
+                                        enabled="{viewModel>/avansButtons/silmeKoy}"/>
+                                    <Button
+                                        id="btnAvansSilmeKaldir"
+                                        text="{i18n>btnSilmeKaldir}"
+                                        icon="sap-icon://sys-cancel"
+                                        press="onFormSilmeKaldir"
+                                        enabled="{viewModel>/avansButtons/silmeKaldir}"/>
+                                    <ToolbarSeparator/>
+                                    <Button
+                                        text="{i18n>btnDetay}"
+                                        icon="sap-icon://detail-view"
+                                        press="onOpenItemDialog"
+                                        enabled="{viewModel>/avansButtons/detay}"/>
+                                    <Button
+                                        text="{i18n>btnGecmis}"
+                                        icon="sap-icon://history"
+                                        press="onOpenHistoryDialog"
+                                        enabled="{viewModel>/avansButtons/gecmis}"/>
+                                    <Button
+                                        icon="sap-icon://refresh"
+                                        press="onRefreshTable"
+                                        tooltip="{i18n>btnYenile}"/>
+                                </OverflowToolbar>
+                            </headerToolbar>
+
+                            <columns>
+                                <Column width="140px"><Text text="{i18n>colDurum}"/></Column>
+                                <Column width="110px"><Text text="{i18n>colAkisNo}"/></Column>
+                                <Column width="110px"><Text text="{i18n>colFormNo}"/></Column>
+                                <Column width="90px"><Text text="{i18n>colSirketKodu}"/></Column>
+                                <Column width="110px"><Text text="{i18n>colTckn}"/></Column>
+                                <Column width="100px"><Text text="{i18n>colBelgeTarihi}"/></Column>
+                                <Column width="100px"><Text text="{i18n>colKayitTarihi}"/></Column>
+                                <Column width="70px"><Text text="{i18n>colMaliDonem}"/></Column>
+                                <Column width="130px"><Text text="{i18n>colTalepBelge}"/></Column>
+                                <Column width="120px"><Text text="{i18n>colOdemeBelge}"/></Column>
+                                <Column width="130px"><Text text="{i18n>colTersBelge}"/></Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colHataMesaji}"/></Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem vAlign="Middle" type="Navigation" press="onOpenItemDialog">
+                                    <cells>
+                                        <ObjectStatus
+                                            text="{path: 'Durum', formatter: '.formatter.formatFormStatusText'}"
+                                            state="{path: 'Durum', formatter: '.formatter.formatFormStatusState'}"
+                                            icon="{path: 'Durum', formatter: '.formatter.formatFormStatusIcon'}"/>
+                                        <Text text="{AkisNumarasi}"/>
+                                        <Text text="{FormNumarasi}"/>
+                                        <Text text="{SirketKodu}"/>
+                                        <Text text="{Tckn}"/>
+                                        <Text text="{path: 'BelgeTarihi', formatter: '.formatter.formatDate'}"/>
+                                        <Text text="{path: 'KayitTarihi', formatter: '.formatter.formatDate'}"/>
+                                        <Text text="{MaliDonem}"/>
+                                        <Text text="{= ${TalepBelge} ? ${TalepBelge} + (${TalepYil} ? ' / ' + ${TalepYil} : '') : ''}"/>
+                                        <Text text="{OdemeBelge}"/>
+                                        <Text text="{= ${TersBelge} ? ${TersBelge} + (${TersYil} ? ' / ' + ${TersYil} : '') : ''}"/>
+                                        <Text text="{HataMesaji}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 2: MASRAF                              -->
+                    <!-- ========================================== -->
+                    <IconTabFilter
+                        id="tabFilterMasraf"
+                        key="M"
+                        text="{i18n>tabMasraf}"
+                        icon="sap-icon://receipt"
+                        iconColor="Neutral">
+                        
+                        <Table
+                            id="tableMasraf"
+                            mode="SingleSelectLeft"
+                            selectionChange="onMasrafSelectionChange"
+                            sticky="ColumnHeaders,HeaderToolbar"
+                            inset="false"
+                            growing="true"
+                            growingThreshold="25"
+                            items="{
+                                path: '/Form',
+                                parameters: {
+                                    $filter: 'SurecTipi eq \'M\''
+                                }
+                            }">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <Title text="{i18n>tabMasraf}" level="H3"/>
+                                    <ToolbarSpacer/>
+                                    <Button
+                                        id="btnMasrafMuhasebelestir"
+                                        text="{i18n>btnMuhasebelestir}"
+                                        type="Emphasized"
+                                        icon="sap-icon://accept"
+                                        press="onMasrafMuhasebelestir"
+                                        enabled="{viewModel>/masrafButtons/muhasebelestir}"/>
+                                    <Button
+                                        id="btnMasrafTersKayit"
+                                        text="{i18n>btnTersKayit}"
+                                        icon="sap-icon://undo"
+                                        press="onFormTersKayit"
+                                        enabled="{viewModel>/masrafButtons/tersKayit}"/>
+                                    <Button
+                                        id="btnMasrafSilmeKoy"
+                                        text="{i18n>btnSilmeKoy}"
+                                        type="Reject"
+                                        icon="sap-icon://delete"
+                                        press="onFormSilmeKoy"
+                                        enabled="{viewModel>/masrafButtons/silmeKoy}"/>
+                                    <Button
+                                        id="btnMasrafSilmeKaldir"
+                                        text="{i18n>btnSilmeKaldir}"
+                                        icon="sap-icon://sys-cancel"
+                                        press="onFormSilmeKaldir"
+                                        enabled="{viewModel>/masrafButtons/silmeKaldir}"/>
+                                    <ToolbarSeparator/>
+                                    <Button
+                                        text="{i18n>btnDetay}"
+                                        icon="sap-icon://detail-view"
+                                        press="onOpenItemDialog"
+                                        enabled="{viewModel>/masrafButtons/detay}"/>
+                                    <Button
+                                        text="{i18n>btnGecmis}"
+                                        icon="sap-icon://history"
+                                        press="onOpenHistoryDialog"
+                                        enabled="{viewModel>/masrafButtons/gecmis}"/>
+                                    <Button
+                                        icon="sap-icon://refresh"
+                                        press="onRefreshTable"
+                                        tooltip="{i18n>btnYenile}"/>
+                                </OverflowToolbar>
+                            </headerToolbar>
+
+                            <columns>
+                                <Column width="140px"><Text text="{i18n>colDurum}"/></Column>
+                                <Column width="110px"><Text text="{i18n>colAkisNo}"/></Column>
+                                <Column width="110px"><Text text="{i18n>colFormNo}"/></Column>
+                                <Column width="90px"><Text text="{i18n>colSirketKodu}"/></Column>
+                                <Column width="110px"><Text text="{i18n>colTckn}"/></Column>
+                                <Column width="100px"><Text text="{i18n>colBelgeTarihi}"/></Column>
+                                <Column width="100px"><Text text="{i18n>colKayitTarihi}"/></Column>
+                                <Column width="70px"><Text text="{i18n>colMaliDonem}"/></Column>
+                                <Column width="120px"><Text text="{i18n>colAvansFormNo}"/></Column>
+                                <Column width="140px"><Text text="{i18n>colMuhasebeBelge}"/></Column>
+                                <Column width="130px"><Text text="{i18n>colTersBelge}"/></Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colHataMesaji}"/></Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem vAlign="Middle" type="Navigation" press="onOpenItemDialog">
+                                    <cells>
+                                        <ObjectStatus
+                                            text="{path: 'Durum', formatter: '.formatter.formatFormStatusText'}"
+                                            state="{path: 'Durum', formatter: '.formatter.formatFormStatusState'}"
+                                            icon="{path: 'Durum', formatter: '.formatter.formatFormStatusIcon'}"/>
+                                        <Text text="{AkisNumarasi}"/>
+                                        <Text text="{FormNumarasi}"/>
+                                        <Text text="{SirketKodu}"/>
+                                        <Text text="{Tckn}"/>
+                                        <Text text="{path: 'BelgeTarihi', formatter: '.formatter.formatDate'}"/>
+                                        <Text text="{path: 'KayitTarihi', formatter: '.formatter.formatDate'}"/>
+                                        <Text text="{MaliDonem}"/>
+                                        <Text text="{= ${AvansFormNumarasi} ? ${AvansFormNumarasi} : ''}"/>
+                                        <Text text="{= ${MuhasebeBelge} ? ${MuhasebeBelge} + (${MuhasebeYil} ? ' / ' + ${MuhasebeYil} : '') : ''}"/>
+                                        <Text text="{= ${TersBelge} ? ${TersBelge} + (${TersYil} ? ' / ' + ${TersYil} : '') : ''}"/>
+                                        <Text text="{HataMesaji}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 3: E-FATURA MASRAFLARI                 -->
+                    <!-- ========================================== -->
+                    <IconTabFilter
+                        id="tabFilterEfatura"
+                        key="E"
+                        text="{i18n>tabEfatura}"
+                        icon="sap-icon://pdf-attachment"
+                        iconColor="Neutral">
+                        
+                        <Table
+                            id="tableEfatura"
+                            mode="SingleSelectLeft"
+                            selectionChange="onEfaturaSelectionChange"
+                            sticky="ColumnHeaders,HeaderToolbar"
+                            inset="false"
+                            growing="true"
+                            growingThreshold="25"
+                            items="{
+                                path: '/Kalem',
+                                parameters: {
+                                    $filter: 'Zcheck eq \'X\''
+                                }
+                            }">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <Title text="{i18n>tabEfatura}" level="H3"/>
+                                    <ToolbarSpacer/>
+                                    <Button
+                                        id="btnEfaturaVirman"
+                                        text="{i18n>btnVirman}"
+                                        type="Emphasized"
+                                        icon="sap-icon://journey-change"
+                                        press="onEfaturaVirman"
+                                        enabled="{viewModel>/efaturaButtons/virman}"/>
+                                    <Button
+                                        id="btnEfaturaGiderlestir"
+                                        text="{i18n>btnGiderlestir}"
+                                        type="Accept"
+                                        icon="sap-icon://accept"
+                                        press="onEfaturaGiderlestir"
+                                        enabled="{viewModel>/efaturaButtons/giderlestir}"/>
+                                    <Button
+                                        id="btnEfaturaTersKayit"
+                                        text="{i18n>btnTersKayit}"
+                                        icon="sap-icon://undo"
+                                        press="onKalemTersKayit"
+                                        enabled="{viewModel>/efaturaButtons/tersKayit}"/>
+                                    <Button
+                                        id="btnEfaturaSilmeKoy"
+                                        text="{i18n>btnSilmeKoy}"
+                                        type="Reject"
+                                        icon="sap-icon://delete"
+                                        press="onKalemSilmeKoy"
+                                        enabled="{viewModel>/efaturaButtons/silmeKoy}"/>
+                                    <Button
+                                        id="btnEfaturaSilmeKaldir"
+                                        text="{i18n>btnSilmeKaldir}"
+                                        icon="sap-icon://sys-cancel"
+                                        press="onKalemSilmeKaldir"
+                                        enabled="{viewModel>/efaturaButtons/silmeKaldir}"/>
+                                    <ToolbarSeparator/>
+                                    <Button
+                                        text="{i18n>btnGecmis}"
+                                        icon="sap-icon://history"
+                                        press="onOpenHistoryDialogForKalem"
+                                        enabled="{viewModel>/efaturaButtons/gecmis}"/>
+                                    <Button
+                                        icon="sap-icon://refresh"
+                                        press="onRefreshTable"
+                                        tooltip="{i18n>btnYenile}"/>
+                                </OverflowToolbar>
+                            </headerToolbar>
+
+                            <columns>
+                                <Column width="130px"><Text text="{i18n>colDurum}"/></Column>
+                                <Column width="100px"><Text text="{i18n>colAkisNo}"/></Column>
+                                <Column width="60px"><Text text="{i18n>colOrderId}"/></Column>
+                                <Column width="160px"><Text text="{i18n>colFaturaId}"/></Column>
+                                <Column width="120px"><Text text="{i18n>colEfaturaCari}"/></Column>
+                                <Column width="120px" hAlign="End"><Text text="{i18n>colTutar}"/></Column>
+                                <Column width="140px"><Text text="{i18n>colMasrafTipi}"/></Column>
+                                <Column width="90px"><Text text="{i18n>colMasrafYeri}"/></Column>
+                                <Column width="110px"><Text text="{i18n>colPYPKodu}"/></Column>
+                                <Column width="70px" hAlign="End"><Text text="{i18n>colKdvOrani}"/></Column>
+                                <Column width="130px"><Text text="{i18n>colVirmanBelge}"/></Column>
+                                <Column width="130px"><Text text="{i18n>colGiderBelge}"/></Column>
+                                <Column width="130px"><Text text="{i18n>colTersBelge}"/></Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="{i18n>colHataMesaji}"/></Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <ObjectStatus
+                                            text="{path: 'KalemDurum', formatter: '.formatter.formatKalemStatusText'}"
+                                            state="{path: 'KalemDurum', formatter: '.formatter.formatKalemStatusState'}"
+                                            icon="{path: 'KalemDurum', formatter: '.formatter.formatKalemStatusIcon'}"/>
+                                        <Text text="{AkisNumarasi}"/>
+                                        <Text text="{OrderId}"/>
+                                        <Text text="{FaturaId}"/>
+                                        <Text text="{EfaturaCari}"/>
+                                        <ObjectNumber
+                                            number="{path: 'Tutar', formatter: '.formatter.formatCurrencyAmount'}"
+                                            unit="{ParaBirimi}"/>
+                                        <Text text="{= ${MasrafTipiTanim} ? ${MasrafTipiTanim} : ${MasrafTipi}}"/>
+                                        <Text text="{MasrafYeri}"/>
+                                        <Text text="{PYPKodu}"/>
+                                        <Text text="{KdvOrani}"/>
+                                        <Text text="{= ${VirmanBelge} ? ${VirmanBelge} + (${VirmanYil} ? ' / ' + ${VirmanYil} : '') : ''}"/>
+                                        <Text text="{= ${GiderBelge} ? ${GiderBelge} + (${GiderYil} ? ' / ' + ${GiderYil} : '') : ''}"/>
+                                        <Text text="{= ${TersBelge} ? ${TersBelge} + (${TersYil} ? ' / ' + ${TersYil} : '') : ''}"/>
+                                        <Text text="{HataMesaji}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 4: GENEL RAPORLAMA                     -->
+                    <!-- ========================================== -->
+                    <IconTabFilter
+                        id="tabFilterRapor"
+                        key="R"
+                        text="{i18n>tabRaporlama}"
+                        icon="sap-icon://excel-attachment"
+                        iconColor="Neutral">
+                        
+                        <Table
+                            id="tableRapor"
+                            sticky="ColumnHeaders,HeaderToolbar"
+                            inset="false"
+                            growing="true"
+                            growingThreshold="50"
+                            items="{
+                                path: '/Kalem'
+                            }">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <Title text="{i18n>tabRaporlama}" level="H3"/>
+                                    <ToolbarSpacer/>
+                                    <Button
+                                        text="{i18n>btnExportExcel}"
+                                        type="Emphasized"
+                                        icon="sap-icon://excel-attachment"
+                                        press="onExportToExcel"/>
+                                    <Button
+                                        icon="sap-icon://refresh"
+                                        press="onRefreshTable"
+                                        tooltip="{i18n>btnYenile}"/>
+                                </OverflowToolbar>
+                            </headerToolbar>
+
+                            <columns>
+                                <Column width="110px"><Text text="{i18n>colAkisNo}"/></Column>
+                                <Column width="60px"><Text text="{i18n>colOrderId}"/></Column>
+                                <Column width="120px"><Text text="{i18n>colDurum}"/></Column>
+                                <Column width="120px" hAlign="End"><Text text="{i18n>colTutar}"/></Column>
+                                <Column width="150px"><Text text="{i18n>colMasrafTipi}"/></Column>
+                                <Column width="100px"><Text text="{i18n>colMasrafYeri}"/></Column>
+                                <Column width="120px"><Text text="{i18n>colPYPKodu}"/></Column>
+                                <Column width="70px" hAlign="End"><Text text="{i18n>colKdvOrani}"/></Column>
+                                <Column width="140px"><Text text="{i18n>colFaturaId}"/></Column>
+                                <Column width="120px"><Text text="{i18n>colEfaturaCari}"/></Column>
+                                <Column width="80px"><Text text="{i18n>colZcheck}"/></Column>
+                                <Column minScreenWidth="Desktop" demandPopin="true"><Text text="{i18n>colAciklama}"/></Column>
+                                <Column width="130px"><Text text="{i18n>colVirmanBelge}"/></Column>
+                                <Column width="130px"><Text text="{i18n>colGiderBelge}"/></Column>
+                                <Column width="130px"><Text text="{i18n>colTersBelge}"/></Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <Text text="{AkisNumarasi}"/>
+                                        <Text text="{OrderId}"/>
+                                        <ObjectStatus
+                                            text="{path: 'KalemDurum', formatter: '.formatter.formatKalemStatusText'}"
+                                            state="{path: 'KalemDurum', formatter: '.formatter.formatKalemStatusState'}"/>
+                                        <ObjectNumber
+                                            number="{path: 'Tutar', formatter: '.formatter.formatCurrencyAmount'}"
+                                            unit="{ParaBirimi}"/>
+                                        <Text text="{= ${MasrafTipiTanim} ? ${MasrafTipiTanim} : ${MasrafTipi}}"/>
+                                        <Text text="{MasrafYeri}"/>
+                                        <Text text="{PYPKodu}"/>
+                                        <Text text="{KdvOrani}"/>
+                                        <Text text="{FaturaId}"/>
+                                        <Text text="{EfaturaCari}"/>
+                                        <Text text="{Zcheck}"/>
+                                        <Text text="{Aciklama}"/>
+                                        <Text text="{= ${VirmanBelge} ? ${VirmanBelge} + (${VirmanYil} ? ' / ' + ${VirmanYil} : '') : ''}"/>
+                                        <Text text="{= ${GiderBelge} ? ${GiderBelge} + (${GiderYil} ? ' / ' + ${GiderYil} : '') : ''}"/>
+                                        <Text text="{= ${TersBelge} ? ${TersBelge} + (${TersYil} ? ' / ' + ${TersYil} : '') : ''}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </f:content>
+    </f:DynamicPage>
 </mvc:View>
