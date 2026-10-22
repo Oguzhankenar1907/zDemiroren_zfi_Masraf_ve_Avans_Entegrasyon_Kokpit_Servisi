@@ -1,1 +1,42 @@
-# zDemiroren_zfi_Masraf_ve_Avans_Entegrasyon_Kokpit_Servisi
+## Application Details
+|               |
+| ------------- |
+|**Generation Date and Time**<br>Thu Oct 22 2026 15:36:42 GMT+0300 (Türkiye Standard Time)|
+|**App Generator**<br>SAP Fiori Application Generator|
+|**App Generator Version**<br>1.22.0|
+|**Generation Platform**<br>Visual Studio Code|
+|**Template Used**<br>Basic V4|
+|**Service Type**<br>SAP System (ABAP Cloud)|
+|**Service URL**<br>https://my440403-api.s4hana.cloud.sap/sap/opu/odata4/sap/zui_fi_csp_kokpit_o4/srvd/sap/zui_fi_csp_kokpit_o4/0001/|
+|**Module Name**<br>zfi_csp_kokpit|
+|**Application Title**<br>Personel Avans ve Masraf Kokpiti|
+|**Namespace**<br>com.golive.demiroren|
+|**UI5 Theme**<br>sap_horizon|
+|**UI5 Version**<br>1.148.10|
+|**Enable TypeScript**<br>False|
+|**Add Eslint configuration**<br>True, see https://www.npmjs.com/package/@sap-ux/eslint-plugin-fiori-tools#rules for the eslint rules.|
+|**Value Help Metadata**<br>Downloaded for external services|
+
+## zfi_csp_kokpit
+
+An SAP Fiori application.
+
+### Starting the generated app
+
+-   This app has been generated using the SAP Fiori tools - App Generator, as part of the SAP Fiori tools suite.  To launch the generated application, run the following from the generated application root folder:
+
+```
+    npm start
+```
+
+- It is also possible to run the application using mock data that reflects the OData Service URL supplied during application generation.  In order to run the application with Mock Data, run the following from the generated app root folder:
+
+```
+    npm run start-mock
+```
+
+#### Pre-requisites:
+
+1. Active NodeJS LTS (Long Term Support) version and associated supported NPM version.  (See https://nodejs.org)
+
+

@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="SAP__aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="SAP__analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AUTHORIZATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Authorization.V1" Alias="SAP__authorization"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="SAP__capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="SAP__common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="SAP__communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CORE',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Core.V1" Alias="SAP__core"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HIERARCHY',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Hierarchy.v1" Alias="SAP__hierarchy"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HTML5',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.HTML5.v1" Alias="SAP__HTML5"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="SAP__measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ODM',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.ODM.v1" Alias="SAP__ODM"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PDF',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.PDF.v1" Alias="SAP__PDF"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="SAP__personalData"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_SESSION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="SAP__session"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_SUPPORT',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Support.v1" Alias="SAP__support"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="SAP__UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="SAP__validation"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001" Alias="SAP__self">
+            <Annotation Term="SAP__core.SchemaVersion" String="1.0.0"/>
+            <EntityType Name="IslemGecmisiType">
+                <Key>
+                    <PropertyRef Name="AkisNumarasi"/>
+                    <PropertyRef Name="Sira"/>
+                </Key>
+                <Property Name="AkisNumarasi" Type="Edm.Int64" Nullable="false"/>
+                <Property Name="Sira" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="FaturaId" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Islem" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Sonuc" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="Belnr" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Gjahr" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="Mesaj" Type="Edm.String" Nullable="false" MaxLength="220"/>
+                <Property Name="Usnam" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="Datum" Type="Edm.Date"/>
+                <Property Name="Uzeit" Type="Edm.TimeOfDay" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="KalemType">
+                <Key>
+                    <PropertyRef Name="AkisNumarasi"/>
+                    <PropertyRef Name="OrderId"/>
+                </Key>
+                <Property Name="AkisNumarasi" Type="Edm.Int64" Nullable="false"/>
+                <Property Name="OrderId" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Tutar" Type="Edm.Decimal" Nullable="false" Precision="23" Scale="variable"/>
+                <Property Name="ParaBirimi" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="Aciklama" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="PYPKodu" Type="Edm.String" Nullable="false" MaxLength="24"/>
+                <Property Name="MasrafTipi" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="MasrafTipiTanim" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="MasrafYeri" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="KdvOrani" Type="Edm.Decimal" Nullable="false" Precision="5" Scale="2"/>
+                <Property Name="EfaturaCari" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="FaturaId" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Zcheck" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="AracGiderTuru" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="KalemDurum" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="OncekiDurum" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="VirmanBelge" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="VirmanYil" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="GiderBelge" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="GiderYil" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="TersBelge" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="TersYil" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="HataMesaji" Type="Edm.String" Nullable="false" MaxLength="220"/>
+                <Property Name="KalemDurumCriticality" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LocalLastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="__OperationControl" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemOperationControl"/>
+                <Property Name="SAP__Messages" Type="Collection(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.SAP__Message)" Nullable="false"/>
+                <NavigationProperty Name="_Header" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType" Nullable="false" Partner="_Item">
+                    <ReferentialConstraint Property="AkisNumarasi" ReferencedProperty="AkisNumarasi"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="FormType">
+                <Key>
+                    <PropertyRef Name="AkisNumarasi"/>
+                </Key>
+                <Property Name="AkisNumarasi" Type="Edm.Int64" Nullable="false"/>
+                <Property Name="FormNumarasi" Type="Edm.Int64" Nullable="false"/>
+                <Property Name="AvansTuru" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="SeyahatTuru" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="BelgeTarihi" Type="Edm.Date"/>
+                <Property Name="KayitTarihi" Type="Edm.Date"/>
+                <Property Name="MaliDonem" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="SirketKodu" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="Tckn" Type="Edm.String" Nullable="false" MaxLength="11"/>
+                <Property Name="SicilNo" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="SurecTipi" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="YurticiYurtdisi" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="AvansFormNumarasi" Type="Edm.Int64" Nullable="false"/>
+                <Property Name="Durum" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="OncekiDurum" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="TalepBelge" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="TalepYil" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="OdemeBelge" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="MuhasebeBelge" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="MuhasebeYil" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="TersBelge" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="TersYil" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="HataMesaji" Type="Edm.String" Nullable="false" MaxLength="220"/>
+                <Property Name="DurumCriticality" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LocalLastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="__OperationControl" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormOperationControl"/>
+                <Property Name="SAP__Messages" Type="Collection(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.SAP__Message)" Nullable="false"/>
+                <NavigationProperty Name="_Item" Type="Collection(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType)" Partner="_Header">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <ComplexType Name="KalemOperationControl">
+                <Property Name="Giderlestir" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="KalemSilmeKaldir" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="KalemSilmeKoy" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="KalemTersKayit" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="Virman" Type="Edm.Boolean" Nullable="false"/>
+            </ComplexType>
+            <ComplexType Name="FormOperationControl">
+                <Property Name="AvansTalebiOlustur" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="Muhasebelestir" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="SilmeKaldir" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="SilmeKoy" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="TersKayit" Type="Edm.Boolean" Nullable="false"/>
+            </ComplexType>
+            <ComplexType Name="SAP__Message">
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <Property Name="message" Type="Edm.String" Nullable="false"/>
+                <Property Name="target" Type="Edm.String"/>
+                <Property Name="additionalTargets" Type="Collection(Edm.String)" Nullable="false"/>
+                <Property Name="transition" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="numericSeverity" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="longtextUrl" Type="Edm.String"/>
+            </ComplexType>
+            <Action Name="AvansTalebiOlustur" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType" Nullable="false"/>
+            </Action>
+            <Action Name="Muhasebelestir" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType" Nullable="false"/>
+            </Action>
+            <Action Name="KalemTersKayit" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType" Nullable="false"/>
+                <Parameter Name="KayitTarihi" Type="Edm.Date" Nullable="true"/>
+                <ReturnType Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType" Nullable="false"/>
+            </Action>
+            <Action Name="SilmeKoy" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType" Nullable="false"/>
+            </Action>
+            <Action Name="Giderlestir" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType" Nullable="false"/>
+            </Action>
+            <Action Name="KalemSilmeKoy" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType" Nullable="false"/>
+            </Action>
+            <Action Name="Virman" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType" Nullable="false"/>
+            </Action>
+            <Action Name="KalemSilmeKaldir" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType" Nullable="false"/>
+            </Action>
+            <Action Name="SilmeKaldir" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType" Nullable="false"/>
+            </Action>
+            <Action Name="TersKayit" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType" Nullable="false"/>
+                <Parameter Name="KayitTarihi" Type="Edm.Date" Nullable="true"/>
+                <ReturnType Type="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType" Nullable="false"/>
+            </Action>
+            <EntityContainer Name="Container">
+                <EntitySet Name="Form" EntityType="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType">
+                    <NavigationPropertyBinding Path="_Item" Target="Kalem"/>
+                </EntitySet>
+                <EntitySet Name="IslemGecmisi" EntityType="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.IslemGecmisiType"/>
+                <EntitySet Name="Kalem" EntityType="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType">
+                    <NavigationPropertyBinding Path="_Header" Target="Form"/>
+                </EntitySet>
+            </EntityContainer>
+            <Annotations Target="SAP__self.IslemGecmisiType/Sira">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.IslemGecmisiType/Gjahr">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.IslemGecmisiType">
+                <Annotation Term="SAP__common.Label" String="CSP Kokpit - İşlem Geçmişi"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/IslemGecmisi">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/AkisNumarasi">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/OrderId">
+                <Annotation Term="SAP__core.ComputedDefaultValue"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/Tutar">
+                <Annotation Term="SAP__measures.ISOCurrency" Path="ParaBirimi"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/ParaBirimi">
+                <Annotation Term="SAP__common.IsCurrency"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/KalemDurum">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/OncekiDurum">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/VirmanBelge">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/VirmanYil">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/GiderBelge">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/GiderYil">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/TersBelge">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/TersYil">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/HataMesaji">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/CreatedBy">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Created By"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Created By User"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_CREATION_USER"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType">
+                <Annotation Term="SAP__common.CreatedBy" Path="CreatedBy"/>
+                <Annotation Term="SAP__common.CreatedAt" Path="CreatedAt"/>
+                <Annotation Term="SAP__common.ChangedBy" Path="LastChangedBy"/>
+                <Annotation Term="SAP__common.ChangedAt" Path="LastChangedAt"/>
+                <Annotation Term="SAP__common.Label" String="CSP Kokpit - Form Kalemi (Projeksiyon)"/>
+                <Annotation Term="SAP__UI.HeaderInfo">
+                    <Record>
+                        <PropertyValue Property="TypeName" String="Kalem"/>
+                        <PropertyValue Property="TypeNamePlural" String="Kalemler"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="OrderId"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.LineItem">
+                    <Collection>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Virman Yap"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.Virman(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Sıra"/>
+                            <PropertyValue Property="Value" Path="OrderId"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Masraf Tipi"/>
+                            <PropertyValue Property="Value" Path="MasrafTipi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Giderleştir"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.Giderlestir(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Masraf Tanımı"/>
+                            <PropertyValue Property="Value" Path="MasrafTipiTanim"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Ters Kayıt"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemTersKayit(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Tutar"/>
+                            <PropertyValue Property="Value" Path="Tutar"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Silme İşareti Koy"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemSilmeKoy(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Para Birimi"/>
+                            <PropertyValue Property="Value" Path="ParaBirimi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Silmeyi Kaldır"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemSilmeKaldir(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.KalemType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="KDV Oranı"/>
+                            <PropertyValue Property="Value" Path="KdvOrani"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Masraf Yeri"/>
+                            <PropertyValue Property="Value" Path="MasrafYeri"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="PYP Kodu"/>
+                            <PropertyValue Property="Value" Path="PYPKodu"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="E-Fatura Carisi"/>
+                            <PropertyValue Property="Value" Path="EfaturaCari"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Fatura ID"/>
+                            <PropertyValue Property="Value" Path="FaturaId"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="E-Fatura Mı (X)"/>
+                            <PropertyValue Property="Value" Path="Zcheck"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Kalem Durumu"/>
+                            <PropertyValue Property="Criticality" Path="KalemDurumCriticality"/>
+                            <PropertyValue Property="CriticalityRepresentation" EnumMember="SAP__UI.CriticalityRepresentationType/WithIcon"/>
+                            <PropertyValue Property="Value" Path="KalemDurum"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Virman Belgesi"/>
+                            <PropertyValue Property="Value" Path="VirmanBelge"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Gider Belgesi"/>
+                            <PropertyValue Property="Value" Path="GiderBelge"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Ters Belgesi"/>
+                            <PropertyValue Property="Value" Path="TersBelge"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Açıklama"/>
+                            <PropertyValue Property="Value" Path="Aciklama"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Hata Mesajı"/>
+                            <PropertyValue Property="Value" Path="HataMesaji"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.Messages" Path="SAP__Messages"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/CreatedAt">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Created On"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Creation Date Time"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_CREATION_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/LastChangedBy">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Changed By"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Last Changed By User"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LASTCHANGE_USER"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/LastChangedAt">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Changed On"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Last Change Date Time"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LASTCHANGE_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/LocalLastChangedAt">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Changed On"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Local Instance Last Change Date Time"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LOCINST_LASTCHANGE_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemType/__OperationControl">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/Kalem">
+                <Annotation Term="SAP__capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_Header"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>__OperationControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>__OperationControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="NonUpdatableNavigationProperties">
+                            <Collection>
+                                <PropertyPath>_Header</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemTersKayit(SAP__self.KalemType)/KayitTarihi">
+                <Annotation Term="SAP__common.Label" String="Ters Kayıt Tarihi"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemTersKayit(SAP__self.KalemType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/KalemTersKayit"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Giderlestir(SAP__self.KalemType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/Giderlestir"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemSilmeKoy(SAP__self.KalemType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/KalemSilmeKoy"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Virman(SAP__self.KalemType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/Virman"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemSilmeKaldir(SAP__self.KalemType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/KalemSilmeKaldir"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container">
+                <Annotation Term="SAP__CodeList.CurrencyCodes">
+                    <Record>
+                        <PropertyValue Property="Url" String="../../../../default/iwbep/common/0001/$metadata"/>
+                        <PropertyValue Property="CollectionPath" String="Currencies"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+                <Annotation Term="SAP__capabilities.FilterFunctions">
+                    <Collection>
+                        <String>eq</String>
+                        <String>ne</String>
+                        <String>gt</String>
+                        <String>ge</String>
+                        <String>lt</String>
+                        <String>le</String>
+                        <String>and</String>
+                        <String>or</String>
+                        <String>contains</String>
+                        <String>startswith</String>
+                        <String>endswith</String>
+                        <String>any</String>
+                        <String>all</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__support.TechnicalInfoLinks">
+                    <Record>
+                        <PropertyValue Property="Url" String="../../../../default/iwbep/common/0001/$metadata"/>
+                        <PropertyValue Property="FunctionImport" String="GetTechnicalInfoLinks"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SupportedFormats">
+                    <Collection>
+                        <String>application/json</String>
+                        <String>application/pdf</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__PDF.Features">
+                    <Record>
+                        <PropertyValue Property="DocumentDescriptionReference" String="../../../../default/iwbep/common/0001/$metadata"/>
+                        <PropertyValue Property="DocumentDescriptionCollection" String="MyDocumentDescriptions"/>
+                        <PropertyValue Property="ArchiveFormat" Bool="true"/>
+                        <PropertyValue Property="Border" Bool="true"/>
+                        <PropertyValue Property="CoverPage" Bool="true"/>
+                        <PropertyValue Property="FitToPage" Bool="true"/>
+                        <PropertyValue Property="FontName" Bool="true"/>
+                        <PropertyValue Property="FontSize" Bool="true"/>
+                        <PropertyValue Property="HeaderFooter" Bool="true"/>
+                        <PropertyValue Property="IANATimezoneFormat" Bool="true"/>
+                        <PropertyValue Property="Margin" Bool="true"/>
+                        <PropertyValue Property="Padding" Bool="true"/>
+                        <PropertyValue Property="ResultSizeDefault" Int="20000"/>
+                        <PropertyValue Property="ResultSizeMaximum" Int="20000"/>
+                        <PropertyValue Property="Signature" Bool="true"/>
+                        <PropertyValue Property="TextDirectionLayout" Bool="true"/>
+                        <PropertyValue Property="Treeview" Bool="true"/>
+                        <PropertyValue Property="UploadToFileShare" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.BatchSupport">
+                    <Record>
+                        <PropertyValue Property="SupportedFormats">
+                            <Collection>
+                                <String>application/json</String>
+                                <String>multipart/mixed</String>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
+                <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/AkisNumarasi">
+                <Annotation Term="SAP__core.ComputedDefaultValue"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/MaliDonem">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/Durum">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/OncekiDurum">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/TalepBelge">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/TalepYil">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/OdemeBelge">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Clearing Journal Entry"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/MuhasebeBelge">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/MuhasebeYil">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/TersBelge">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/TersYil">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/HataMesaji">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/CreatedBy">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Created By"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Created By User"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_CREATION_USER"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType">
+                <Annotation Term="SAP__common.CreatedBy" Path="CreatedBy"/>
+                <Annotation Term="SAP__common.CreatedAt" Path="CreatedAt"/>
+                <Annotation Term="SAP__common.ChangedBy" Path="LastChangedBy"/>
+                <Annotation Term="SAP__common.ChangedAt" Path="LastChangedAt"/>
+                <Annotation Term="SAP__common.Label" String="CSP Kokpit - Form Başlığı (Projeksiyon)"/>
+                <Annotation Term="SAP__UI.Facets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Form Bilgileri"/>
+                            <PropertyValue Property="ID" String="GenelBilgiler"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.Identification"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Kalemler"/>
+                            <PropertyValue Property="ID" String="Kalemler"/>
+                            <PropertyValue Property="Target" AnnotationPath="_Item/@SAP__UI.LineItem"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderInfo">
+                    <Record>
+                        <PropertyValue Property="TypeName" String="Form"/>
+                        <PropertyValue Property="TypeNamePlural" String="Masraf ve Avans Formları"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="FormNumarasi"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="SurecTipi"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.Identification">
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Şirket Kodu"/>
+                            <PropertyValue Property="Value" Path="SirketKodu"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Akış No"/>
+                            <PropertyValue Property="Value" Path="AkisNumarasi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Form No"/>
+                            <PropertyValue Property="Value" Path="FormNumarasi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Süreç Tipi"/>
+                            <PropertyValue Property="Value" Path="SurecTipi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Avans Türü"/>
+                            <PropertyValue Property="Value" Path="AvansTuru"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Yurtiçi/Dışı"/>
+                            <PropertyValue Property="Value" Path="YurticiYurtdisi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Belge Tarihi"/>
+                            <PropertyValue Property="Value" Path="BelgeTarihi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Kayıt Tarihi"/>
+                            <PropertyValue Property="Value" Path="KayitTarihi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="TCKN"/>
+                            <PropertyValue Property="Value" Path="Tckn"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Sicil No"/>
+                            <PropertyValue Property="Value" Path="SicilNo"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Kapatılan Avans No"/>
+                            <PropertyValue Property="Value" Path="AvansFormNumarasi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Talep Belgesi"/>
+                            <PropertyValue Property="Value" Path="TalepBelge"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Ödeme Belgesi"/>
+                            <PropertyValue Property="Value" Path="OdemeBelge"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Muhasebe Belgesi"/>
+                            <PropertyValue Property="Value" Path="MuhasebeBelge"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Ters Kayıt Belgesi"/>
+                            <PropertyValue Property="Value" Path="TersBelge"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Durum"/>
+                            <PropertyValue Property="Criticality" Path="DurumCriticality"/>
+                            <PropertyValue Property="Value" Path="Durum"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Son Hata Mesajı"/>
+                            <PropertyValue Property="Value" Path="HataMesaji"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.LineItem">
+                    <Collection>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Avans Talebi Oluştur"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.AvansTalebiOlustur(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Şirket Kodu"/>
+                            <PropertyValue Property="Value" Path="SirketKodu"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Muhasebeleştir"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.Muhasebelestir(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Akış No"/>
+                            <PropertyValue Property="Value" Path="AkisNumarasi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Ters Kayıt"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.TersKayit(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Form No"/>
+                            <PropertyValue Property="Value" Path="FormNumarasi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Süreç"/>
+                            <PropertyValue Property="Value" Path="SurecTipi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Silme İşareti Koy"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.SilmeKoy(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Silmeyi Kaldır"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.SilmeKaldir(com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001.FormType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Avans Türü"/>
+                            <PropertyValue Property="Value" Path="AvansTuru"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Yurtiçi/Dışı"/>
+                            <PropertyValue Property="Value" Path="YurticiYurtdisi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Belge Tarihi"/>
+                            <PropertyValue Property="Value" Path="BelgeTarihi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Kayıt Tarihi"/>
+                            <PropertyValue Property="Value" Path="KayitTarihi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="TCKN"/>
+                            <PropertyValue Property="Value" Path="Tckn"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Sicil No"/>
+                            <PropertyValue Property="Value" Path="SicilNo"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Kapatılan Avans No"/>
+                            <PropertyValue Property="Value" Path="AvansFormNumarasi"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Talep Belgesi"/>
+                            <PropertyValue Property="Value" Path="TalepBelge"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Ödeme Belgesi"/>
+                            <PropertyValue Property="Value" Path="OdemeBelge"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Muhasebe Belgesi"/>
+                            <PropertyValue Property="Value" Path="MuhasebeBelge"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Ters Kayıt Belgesi"/>
+                            <PropertyValue Property="Value" Path="TersBelge"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Durum"/>
+                            <PropertyValue Property="Criticality" Path="DurumCriticality"/>
+                            <PropertyValue Property="CriticalityRepresentation" EnumMember="SAP__UI.CriticalityRepresentationType/WithIcon"/>
+                            <PropertyValue Property="Value" Path="Durum"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Hata Mesajı"/>
+                            <PropertyValue Property="Value" Path="HataMesaji"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>SirketKodu</PropertyPath>
+                        <PropertyPath>AkisNumarasi</PropertyPath>
+                        <PropertyPath>FormNumarasi</PropertyPath>
+                        <PropertyPath>BelgeTarihi</PropertyPath>
+                        <PropertyPath>Tckn</PropertyPath>
+                        <PropertyPath>Durum</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.Messages" Path="SAP__Messages"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/CreatedAt">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Created On"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Creation Date Time"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_CREATION_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/LastChangedBy">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Changed By"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Last Changed By User"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LASTCHANGE_USER"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/LastChangedAt">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Changed On"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Last Change Date Time"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LASTCHANGE_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/LocalLastChangedAt">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__common.Label" String="Changed On"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Local Instance Last Change Date Time"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LOCINST_LASTCHANGE_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/__OperationControl">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormType/_Item">
+                <Annotation Term="SAP__common.Composition"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/Form">
+                <Annotation Term="SAP__capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_Item"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>__OperationControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>__OperationControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="NonUpdatableNavigationProperties">
+                            <Collection>
+                                <PropertyPath>_Item</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.AvansTalebiOlustur(SAP__self.FormType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/AvansTalebiOlustur"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Muhasebelestir(SAP__self.FormType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/Muhasebelestir"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SilmeKoy(SAP__self.FormType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/SilmeKoy"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SilmeKaldir(SAP__self.FormType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/SilmeKaldir"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TersKayit(SAP__self.FormType)/KayitTarihi">
+                <Annotation Term="SAP__common.Label" String="Ters Kayıt Tarihi"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TersKayit(SAP__self.FormType)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/TersKayit"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemOperationControl/Giderlestir">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemOperationControl/KalemSilmeKaldir">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemOperationControl/KalemSilmeKoy">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemOperationControl/KalemTersKayit">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.KalemOperationControl/Virman">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormOperationControl/AvansTalebiOlustur">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormOperationControl/Muhasebelestir">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormOperationControl/SilmeKaldir">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormOperationControl/SilmeKoy">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.FormOperationControl/TersKayit">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
