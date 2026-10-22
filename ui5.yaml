@@ -4,17 +4,6 @@ specVersion: "4.0"
 metadata:
   name: com.golive.demiroren.zficspkokpit
 type: application
-framework:
-  name: SAPUI5
-  version: 1.148.10
-  libraries:
-    - name: sap.m
-    - name: sap.ui.core
-    - name: sap.f
-    - name: sap.ui.layout
-    - name: sap.ui.table
-    - name: sap.ui.export
-    - name: themelib_sap_horizon
 server:
   customMiddleware:
     - name: fiori-tools-proxy
@@ -29,7 +18,7 @@ server:
         backend:
           - authenticationType: reentranceTicket # SAML support for vscode
             path: /sap
-            url: https://my440403-api.s4hana.cloud.sap
+            url: https://my440393-api.s4hana.cloud.sap
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

@@ -29,5 +29,16 @@
     "start-variants-management": "fiori run --open \"/preview.html#app-preview\"",
     "unit-test": "fiori run --config ./ui5-mock.yaml --open \"test/unit/unitTests.qunit.html\""
   },
-  "sapuxLayer": "CUSTOMER_BASE"
+  "sapuxLayer": "CUSTOMER_BASE",
+  "overrides": {
+    "@ui5/project": {
+      "ajv": "8.20.0"
+    },
+    "ajv-errors": {
+      "ajv": "8.20.0"
+    },
+    "@sap-ux/ui5-config": {
+      "ajv": "8.20.0"
+    }
+  }
 }
