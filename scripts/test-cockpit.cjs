@@ -51,7 +51,7 @@ assert.equal(formatter.kind(undefined), 'Tanımsız');
 assert.equal(formatter.kind(0), 'Diğer (0)');
 assert.equal(formatter.area('0'), '0 · Yurtiçi');
 Object.assign(formatterProxy, formatter);
-const header = {SirketKodu:'1100', SurecTipi:'M', AvansTuru:3, Durum:'M', HataMesaji:'başlık', TersBelge:'100', TersYil:'2025', AvansFormNumarasi:'9007199254740999'};
+const header = {SirketKodu:'1100', SurecTipi:'M', MasrafTuru:3, Durum:'M', HataMesaji:'başlık', TersBelge:'100', TersYil:'2025', AvansFormNumarasi:'9007199254740999'};
 const normal = controller._exportRow({OrderId:1, AkisNumarasi:'9007199254740993', Zcheck:'', KalemDurum:'', Tutar:'12345678901234567890.12', _Header:header});
 assert.equal(normal.Durum, 'M');
 assert.equal(normal.TersBelge, '100');

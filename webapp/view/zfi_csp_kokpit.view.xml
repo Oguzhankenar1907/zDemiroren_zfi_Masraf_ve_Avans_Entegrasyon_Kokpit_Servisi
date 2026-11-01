@@ -4,7 +4,7 @@
         <content>
             <VBox width="100%">
                 <MessageStrip text="{ui&gt;/connection}" showIcon="true"/>
-                <MessageStrip text="Muhasebe işlemleri backend düzeltmeleri ve doğrulaması tamamlanana kadar devre dışıdır." type="Warning" showIcon="true"/>
+                <MessageStrip text="Avans Talebi Oluştur, SOAP entegrasyonu tamamlanana kadar devre dışıdır." type="Warning" showIcon="true"/>
                 <Panel headerText="Filtreler" expandable="true" expanded="true" backgroundDesign="Solid">
                     <layout:Grid defaultSpan="XL3 L3 M6 S12" hSpacing="2" vSpacing="1">
                         <VBox>
@@ -69,365 +69,381 @@
                 <IconTabBar id="tabs" select="onTabSelect">
                     <items>
                         <IconTabFilter key="A" text="Avans">
-                            <Table id="tableA" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
-                                <headerToolbar>
-                                    <OverflowToolbar>
-                                        <Button text="Avans Talebi Oluştur" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                        <Button text="Ters Kayıt" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                        <Button text="Silme İşareti Koy" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                        <Button text="Silmeyi Kaldır" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                    </OverflowToolbar>
-                                </headerToolbar>
-                                <columns>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Şirket"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Akış"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Form"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Durum"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Masraf Türü"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Belge Tarihi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="TCKN"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Sicil"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Mesaj"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Süreç Tipi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Yurtiçi/Yurtdışı"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Avans Form Numarası"/>
-                                    </Column>
-                                </columns>
-                                <dependents>
-                                    <ColumnListItem id="rowA" type="Navigation">
-                                        <cells>
-                                            <Text text="{SirketKodu}"/>
-                                            <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
-                                            <Text text="{path:'FormNumarasi', targetType:'any'}" wrapping="false"/>
-                                            <ObjectStatus text="{path:'Durum', formatter:'.formatter.status'}" state="{path:'DurumCriticality', formatter:'.formatter.state'}"/>
-                                            <Text text="{path:'AvansTuru', formatter:'.formatter.kind'}"/>
-                                            <Text text="{BelgeTarihi}"/>
-                                            <Text text="{Tckn}"/>
-                                            <Text text="{SicilNo}"/>
-                                            <Text text="{HataMesaji}"/>
-                                            <Text text="{path:'SurecTipi', formatter:'.formatter.process'}"/>
-                                            <Text text="{path:'YurticiYurtdisi', formatter:'.formatter.area'}"/>
-                                            <Text text="{path:'AvansFormNumarasi', targetType:'any'}" wrapping="false"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </dependents>
-                            </Table>
+                            <ScrollContainer width="100%" horizontal="true" vertical="false" focusable="true">
+                                <Table id="tableA" fixedLayout="false" mode="MultiSelect" selectionChange="onAvansSelectionChange" updateFinished="onAvansSelectionChange" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
+                                    <headerToolbar>
+                                        <OverflowToolbar>
+                                            <Button text="Avans Talebi Oluştur" enabled="{= ${ui&gt;/advanceBackendReady} &amp;&amp; ${ui&gt;/advanceSelectionEligible} }" tooltip="Backend avans aksiyonu doğrulandıktan ve arayüz çağrısı bağlandıktan sonra kullanıma açılacak; B/H durumunda uygun bir avans seçilmelidir"/>
+                                            <Button text="Ters Kayıt" icon="sap-icon://undo" press="onTersKayit" enabled="{ui&gt;/act/A/TersKayit}" tooltip="Seçili formların belgesini ters kaydeder (durum Muhasebeleşti olmalı)"/>
+                                            <Button text="Silme İşareti Koy" icon="sap-icon://delete" press="onSilmeKoy" enabled="{ui&gt;/act/A/SilmeKoy}" tooltip="Seçili kayıtlara silme işareti koyar (durum B veya H olmalı)"/>
+                                            <Button text="Silmeyi Kaldır" icon="sap-icon://undo" press="onSilmeKaldir" enabled="{ui&gt;/act/A/SilmeKaldir}" tooltip="Silme işaretini kaldırır, kayıt önceki durumuna döner (durum S olmalı)"/>
+                                        </OverflowToolbar>
+                                    </headerToolbar>
+                                    <columns>
+                                        <Column>
+                                            <Text text="Şirket"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Akış"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Form"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Durum"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Masraf Türü"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Belge Tarihi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="TCKN"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Sicil"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Mesaj"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Süreç Tipi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Yurtiçi/Yurtdışı"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Avans Form Numarası"/>
+                                        </Column>
+                                    </columns>
+                                    <dependents>
+                                        <ColumnListItem id="rowA" type="Navigation">
+                                            <cells>
+                                                <Text text="{SirketKodu}"/>
+                                                <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <Text text="{path:'FormNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <ObjectStatus text="{path:'Durum', formatter:'.formatter.status'}" state="{path:'DurumCriticality', formatter:'.formatter.state'}"/>
+                                                <Text text="{path:'MasrafTuru', formatter:'.formatter.kind'}"/>
+                                                <Text text="{BelgeTarihi}"/>
+                                                <Text text="{Tckn}"/>
+                                                <Text text="{SicilNo}"/>
+                                                <Text text="{HataMesaji}"/>
+                                                <Text text="{path:'SurecTipi', formatter:'.formatter.process'}"/>
+                                                <Text text="{path:'YurticiYurtdisi', formatter:'.formatter.area'}"/>
+                                                <Text text="{path:'AvansFormNumarasi', targetType:'any'}" wrapping="false"/>
+                                            </cells>
+                                        </ColumnListItem>
+                                    </dependents>
+                                </Table>
+                            </ScrollContainer>
                         </IconTabFilter>
                         <IconTabFilter key="M" text="Masraf">
-                            <Table id="tableM" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
-                                <headerToolbar>
-                                    <OverflowToolbar>
-                                        <Button text="Muhasebele?tir" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                        <Button text="Ters Kayıt" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                        <Button text="Silme İşareti Koy" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                        <Button text="Silmeyi Kaldır" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                    </OverflowToolbar>
-                                </headerToolbar>
-                                <columns>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Şirket"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Akış"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Form"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Durum"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Masraf Türü"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Belge Tarihi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="TCKN"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Sicil"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Mesaj"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Süreç Tipi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Yurtiçi/Yurtdışı"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Avans Form Numarası"/>
-                                    </Column>
-                                </columns>
-                                <dependents>
-                                    <ColumnListItem id="rowM" type="Navigation">
-                                        <cells>
-                                            <Text text="{SirketKodu}"/>
-                                            <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
-                                            <Text text="{path:'FormNumarasi', targetType:'any'}" wrapping="false"/>
-                                            <ObjectStatus text="{path:'Durum', formatter:'.formatter.status'}" state="{path:'DurumCriticality', formatter:'.formatter.state'}"/>
-                                            <Text text="{path:'AvansTuru', formatter:'.formatter.kind'}"/>
-                                            <Text text="{BelgeTarihi}"/>
-                                            <Text text="{Tckn}"/>
-                                            <Text text="{SicilNo}"/>
-                                            <Text text="{HataMesaji}"/>
-                                            <Text text="{path:'SurecTipi', formatter:'.formatter.process'}"/>
-                                            <Text text="{path:'YurticiYurtdisi', formatter:'.formatter.area'}"/>
-                                            <Text text="{path:'AvansFormNumarasi', targetType:'any'}" wrapping="false"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </dependents>
-                            </Table>
+                            <ScrollContainer width="100%" horizontal="true" vertical="false" focusable="true">
+                                <Table id="tableM" fixedLayout="false" mode="MultiSelect" selectionChange="onRowSelectionChange" updateFinished="onRowSelectionChange" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
+                                    <headerToolbar>
+                                        <OverflowToolbar>
+                                            <Button text="Muhasebeleştir" icon="sap-icon://accounting-document-verification" type="Emphasized" press="onMuhasebelestir" enabled="{ui&gt;/act/M/Muhasebelestir}" tooltip="Seçili masraf formları için muhasebe belgesi oluşturur (durum B veya H olmalı)"/>
+                                            <Button text="Ters Kayıt" icon="sap-icon://undo" press="onTersKayit" enabled="{ui&gt;/act/M/TersKayit}" tooltip="Seçili formların belgesini ters kaydeder (durum Muhasebeleşti olmalı)"/>
+                                            <Button text="Silme İşareti Koy" icon="sap-icon://delete" press="onSilmeKoy" enabled="{ui&gt;/act/M/SilmeKoy}" tooltip="Seçili kayıtlara silme işareti koyar (durum B veya H olmalı)"/>
+                                            <Button text="Silmeyi Kaldır" icon="sap-icon://undo" press="onSilmeKaldir" enabled="{ui&gt;/act/M/SilmeKaldir}" tooltip="Silme işaretini kaldırır, kayıt önceki durumuna döner (durum S olmalı)"/>
+                                        </OverflowToolbar>
+                                    </headerToolbar>
+                                    <columns>
+                                        <Column>
+                                            <Text text="Şirket"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Akış"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Form"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Durum"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Masraf Türü"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Belge Tarihi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="TCKN"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Sicil"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Mesaj"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Süreç Tipi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Yurtiçi/Yurtdışı"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Avans Form Numarası"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Muhasebe Belgesi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Ters Kayıt Belgesi"/>
+                                        </Column>
+                                    </columns>
+                                    <dependents>
+                                        <ColumnListItem id="rowM" type="Navigation">
+                                            <cells>
+                                                <Text text="{SirketKodu}"/>
+                                                <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <Text text="{path:'FormNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <ObjectStatus text="{path:'Durum', formatter:'.formatter.status'}" state="{path:'DurumCriticality', formatter:'.formatter.state'}"/>
+                                                <Text text="{path:'MasrafTuru', formatter:'.formatter.kind'}"/>
+                                                <Text text="{BelgeTarihi}"/>
+                                                <Text text="{Tckn}"/>
+                                                <Text text="{SicilNo}"/>
+                                                <Text text="{HataMesaji}"/>
+                                                <Text text="{path:'SurecTipi', formatter:'.formatter.process'}"/>
+                                                <Text text="{path:'YurticiYurtdisi', formatter:'.formatter.area'}"/>
+                                                <Text text="{path:'AvansFormNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <Text text="{parts:[{path:'MuhasebeBelge'},{path:'MuhasebeYil'}], formatter:'.formatter.doc'}" wrapping="false"/>
+                                                <Text text="{parts:[{path:'TersBelge'},{path:'TersYil'}], formatter:'.formatter.doc'}" wrapping="false"/>
+                                            </cells>
+                                        </ColumnListItem>
+                                    </dependents>
+                                </Table>
+                            </ScrollContainer>
                         </IconTabFilter>
                         <IconTabFilter key="E" text="E-Fatura Masrafları">
-                            <Table id="tableE" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
-                                <headerToolbar>
-                                    <OverflowToolbar>
-                                        <Button text="Virman Yap" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                        <Button text="Giderleştir" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                        <Button text="Ters Kayıt" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                        <Button text="Silme İşareti Koy" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                        <Button text="Silmeyi Kaldır" enabled="false" tooltip="Muhasebe işlemleri henüz kullanıma açık değil"/>
-                                    </OverflowToolbar>
-                                </headerToolbar>
-                                <columns>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Şirket"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Akış"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Form"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Fatura"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Sıra"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Durum"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Tutar"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Para Birimi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Masraf Tanımı"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Masraf Yeri"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Açıklama"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Mesaj"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Masraf Türü"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Süreç Tipi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Yurtiçi/Yurtdışı"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Avans Form Numarası"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Masraf Tipi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="PYP"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="KDV (%)"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="E-Fatura Carisi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Virman Belgesi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Virman Yılı"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Gider Belgesi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Gider Yılı"/>
-                                    </Column>
-                                </columns>
-                                <dependents>
-                                    <ColumnListItem id="rowE" type="Navigation">
-                                        <cells>
-                                            <Text text="{_Header/SirketKodu}"/>
-                                            <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
-                                            <Text text="{path:'_Header/FormNumarasi', targetType:'any'}" wrapping="false"/>
-                                            <Text text="{FaturaId}"/>
-                                            <Text text="{OrderId}"/>
-                                            <ObjectStatus text="{parts:[{path:'Zcheck'},{path:'KalemDurum'},{path:'_Header/Durum'}], formatter:'.formatter.itemStatus'}" state="{parts:[{path:'Zcheck'},{path:'KalemDurumCriticality'},{path:'_Header/DurumCriticality'}], formatter:'.formatter.itemState'}"/>
-                                            <Text text="{Tutar}"/>
-                                            <Text text="{ParaBirimi}"/>
-                                            <Text text="{MasrafTipiTanim}"/>
-                                            <Text text="{MasrafYeri}"/>
-                                            <Text text="{Aciklama}"/>
-                                            <Text text="{parts:[{path:'Zcheck'},{path:'HataMesaji'},{path:'_Header/HataMesaji'}], formatter:'.formatter.itemValue'}"/>
-                                            <Text text="{path:'_Header/AvansTuru', formatter:'.formatter.kind'}"/>
-                                            <Text text="{path:'_Header/SurecTipi', formatter:'.formatter.process'}"/>
-                                            <Text text="{path:'_Header/YurticiYurtdisi', formatter:'.formatter.area'}"/>
-                                            <Text text="{path:'_Header/AvansFormNumarasi', targetType:'any'}" wrapping="false"/>
-                                            <Text text="{MasrafTipi}"/>
-                                            <Text text="{PYPKodu}"/>
-                                            <Text text="{KdvOrani}"/>
-                                            <Text text="{EfaturaCari}"/>
-                                            <Text text="{VirmanBelge}"/>
-                                            <Text text="{VirmanYil}"/>
-                                            <Text text="{GiderBelge}"/>
-                                            <Text text="{GiderYil}"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </dependents>
-                            </Table>
+                            <ScrollContainer width="100%" horizontal="true" vertical="false" focusable="true">
+                                <Table id="tableE" fixedLayout="false" mode="MultiSelect" selectionChange="onRowSelectionChange" updateFinished="onRowSelectionChange" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
+                                    <headerToolbar>
+                                        <OverflowToolbar>
+                                            <Button text="Virman Yap" icon="sap-icon://journey-change" type="Emphasized" press="onVirman" enabled="{ui&gt;/act/E/Virman}" tooltip="Seçili faturalar için virman belgesi oluşturur (durum B veya H olmalı)"/>
+                                            <Button text="Giderleştir" icon="sap-icon://expense-report" press="onGiderlestir" enabled="{ui&gt;/act/E/Giderlestir}" tooltip="Virmanı yapılmış faturalar için giderleştirme belgesi oluşturur (durum V olmalı)"/>
+                                            <Button text="Ters Kayıt" icon="sap-icon://undo" press="onTersKayit" enabled="{ui&gt;/act/E/TersKayit}" tooltip="Seçili faturaların giderleştirme (G) veya virman (V) belgesini ters kaydeder"/>
+                                            <Button text="Silme İşareti Koy" icon="sap-icon://delete" press="onSilmeKoy" enabled="{ui&gt;/act/E/SilmeKoy}" tooltip="Seçili kayıtlara silme işareti koyar (durum B veya H olmalı)"/>
+                                            <Button text="Silmeyi Kaldır" icon="sap-icon://undo" press="onSilmeKaldir" enabled="{ui&gt;/act/E/SilmeKaldir}" tooltip="Silme işaretini kaldırır, kayıt önceki durumuna döner (durum S olmalı)"/>
+                                        </OverflowToolbar>
+                                    </headerToolbar>
+                                    <columns>
+                                        <Column>
+                                            <Text text="Şirket"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Akış"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Form"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Fatura"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Sıra"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Durum"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Tutar"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Para Birimi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Masraf Tanımı"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Masraf Yeri"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Açıklama"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Mesaj"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Masraf Türü"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Süreç Tipi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Yurtiçi/Yurtdışı"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Avans Form Numarası"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Masraf Tipi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="PYP"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="KDV (%)"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="E-Fatura Carisi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Virman Belgesi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Virman Yılı"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Gider Belgesi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Gider Yılı"/>
+                                        </Column>
+                                    </columns>
+                                    <dependents>
+                                        <ColumnListItem id="rowE" type="Navigation">
+                                            <cells>
+                                                <Text text="{_Header/SirketKodu}"/>
+                                                <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <Text text="{path:'_Header/FormNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <Text text="{FaturaId}"/>
+                                                <Text text="{OrderId}"/>
+                                                <ObjectStatus text="{parts:[{path:'Zcheck'},{path:'KalemDurum'},{path:'_Header/Durum'}], formatter:'.formatter.itemStatus'}" state="{parts:[{path:'Zcheck'},{path:'KalemDurumCriticality'},{path:'_Header/DurumCriticality'}], formatter:'.formatter.itemState'}"/>
+                                                <Text text="{Tutar}"/>
+                                                <Text text="{ParaBirimi}"/>
+                                                <Text text="{MasrafTipiTanim}"/>
+                                                <Text text="{MasrafYeri}"/>
+                                                <Text text="{Aciklama}"/>
+                                                <Text text="{parts:[{path:'Zcheck'},{path:'HataMesaji'},{path:'_Header/HataMesaji'}], formatter:'.formatter.itemValue'}"/>
+                                                <Text text="{path:'_Header/MasrafTuru', formatter:'.formatter.kind'}"/>
+                                                <Text text="{path:'_Header/SurecTipi', formatter:'.formatter.process'}"/>
+                                                <Text text="{path:'_Header/YurticiYurtdisi', formatter:'.formatter.area'}"/>
+                                                <Text text="{path:'_Header/AvansFormNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <Text text="{MasrafTipi}"/>
+                                                <Text text="{PYPKodu}"/>
+                                                <Text text="{KdvOrani}"/>
+                                                <Text text="{EfaturaCari}"/>
+                                                <Text text="{VirmanBelge}"/>
+                                                <Text text="{VirmanYil}"/>
+                                                <Text text="{GiderBelge}"/>
+                                                <Text text="{GiderYil}"/>
+                                            </cells>
+                                        </ColumnListItem>
+                                    </dependents>
+                                </Table>
+                            </ScrollContainer>
                         </IconTabFilter>
                         <IconTabFilter key="R" text="Raporlama">
-                            <Table id="tableR" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
-                                <columns>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Şirket"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Akış"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Form"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Fatura"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Sıra"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Durum"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Tutar"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Para Birimi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Masraf Tanımı"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Masraf Yeri"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Açıklama"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Mesaj"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Masraf Türü"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Süreç Tipi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Yurtiçi/Yurtdışı"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Avans Form Numarası"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Masraf Tipi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="PYP"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="KDV (%)"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="E-Fatura Carisi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Virman Belgesi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Virman Yılı"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Gider Belgesi"/>
-                                    </Column>
-                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                        <Text text="Gider Yılı"/>
-                                    </Column>
-                                </columns>
-                                <dependents>
-                                    <ColumnListItem id="rowR" type="Navigation">
-                                        <cells>
-                                            <Text text="{_Header/SirketKodu}"/>
-                                            <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
-                                            <Text text="{path:'_Header/FormNumarasi', targetType:'any'}" wrapping="false"/>
-                                            <Text text="{FaturaId}"/>
-                                            <Text text="{OrderId}"/>
-                                            <ObjectStatus text="{parts:[{path:'Zcheck'},{path:'KalemDurum'},{path:'_Header/Durum'}], formatter:'.formatter.itemStatus'}" state="{parts:[{path:'Zcheck'},{path:'KalemDurumCriticality'},{path:'_Header/DurumCriticality'}], formatter:'.formatter.itemState'}"/>
-                                            <Text text="{Tutar}"/>
-                                            <Text text="{ParaBirimi}"/>
-                                            <Text text="{MasrafTipiTanim}"/>
-                                            <Text text="{MasrafYeri}"/>
-                                            <Text text="{Aciklama}"/>
-                                            <Text text="{parts:[{path:'Zcheck'},{path:'HataMesaji'},{path:'_Header/HataMesaji'}], formatter:'.formatter.itemValue'}"/>
-                                            <Text text="{path:'_Header/AvansTuru', formatter:'.formatter.kind'}"/>
-                                            <Text text="{path:'_Header/SurecTipi', formatter:'.formatter.process'}"/>
-                                            <Text text="{path:'_Header/YurticiYurtdisi', formatter:'.formatter.area'}"/>
-                                            <Text text="{path:'_Header/AvansFormNumarasi', targetType:'any'}" wrapping="false"/>
-                                            <Text text="{MasrafTipi}"/>
-                                            <Text text="{PYPKodu}"/>
-                                            <Text text="{KdvOrani}"/>
-                                            <Text text="{EfaturaCari}"/>
-                                            <Text text="{VirmanBelge}"/>
-                                            <Text text="{VirmanYil}"/>
-                                            <Text text="{GiderBelge}"/>
-                                            <Text text="{GiderYil}"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </dependents>
-                            </Table>
+                            <ScrollContainer width="100%" horizontal="true" vertical="false" focusable="true">
+                                <Table id="tableR" fixedLayout="false" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
+                                    <columns>
+                                        <Column>
+                                            <Text text="Şirket"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Akış"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Form"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Fatura"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Sıra"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Durum"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Tutar"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Para Birimi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Masraf Tanımı"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Masraf Yeri"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Açıklama"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Mesaj"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Masraf Türü"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Süreç Tipi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Yurtiçi/Yurtdışı"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Avans Form Numarası"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Masraf Tipi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="PYP"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="KDV (%)"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="E-Fatura Carisi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Virman Belgesi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Virman Yılı"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Gider Belgesi"/>
+                                        </Column>
+                                        <Column>
+                                            <Text text="Gider Yılı"/>
+                                        </Column>
+                                    </columns>
+                                    <dependents>
+                                        <ColumnListItem id="rowR" type="Navigation">
+                                            <cells>
+                                                <Text text="{_Header/SirketKodu}"/>
+                                                <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <Text text="{path:'_Header/FormNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <Text text="{FaturaId}"/>
+                                                <Text text="{OrderId}"/>
+                                                <ObjectStatus text="{parts:[{path:'Zcheck'},{path:'KalemDurum'},{path:'_Header/Durum'}], formatter:'.formatter.itemStatus'}" state="{parts:[{path:'Zcheck'},{path:'KalemDurumCriticality'},{path:'_Header/DurumCriticality'}], formatter:'.formatter.itemState'}"/>
+                                                <Text text="{Tutar}"/>
+                                                <Text text="{ParaBirimi}"/>
+                                                <Text text="{MasrafTipiTanim}"/>
+                                                <Text text="{MasrafYeri}"/>
+                                                <Text text="{Aciklama}"/>
+                                                <Text text="{parts:[{path:'Zcheck'},{path:'HataMesaji'},{path:'_Header/HataMesaji'}], formatter:'.formatter.itemValue'}"/>
+                                                <Text text="{path:'_Header/MasrafTuru', formatter:'.formatter.kind'}"/>
+                                                <Text text="{path:'_Header/SurecTipi', formatter:'.formatter.process'}"/>
+                                                <Text text="{path:'_Header/YurticiYurtdisi', formatter:'.formatter.area'}"/>
+                                                <Text text="{path:'_Header/AvansFormNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <Text text="{MasrafTipi}"/>
+                                                <Text text="{PYPKodu}"/>
+                                                <Text text="{KdvOrani}"/>
+                                                <Text text="{EfaturaCari}"/>
+                                                <Text text="{VirmanBelge}"/>
+                                                <Text text="{VirmanYil}"/>
+                                                <Text text="{GiderBelge}"/>
+                                                <Text text="{GiderYil}"/>
+                                            </cells>
+                                        </ColumnListItem>
+                                    </dependents>
+                                </Table>
+                            </ScrollContainer>
                         </IconTabFilter>
                     </items>
                 </IconTabBar>

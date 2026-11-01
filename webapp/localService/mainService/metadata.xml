@@ -120,7 +120,7 @@
                 </Key>
                 <Property Name="AkisNumarasi" Type="Edm.Int64" Nullable="false"/>
                 <Property Name="FormNumarasi" Type="Edm.Int64" Nullable="false"/>
-                <Property Name="AvansTuru" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="MasrafTuru" Type="Edm.Byte" Nullable="false"/>
                 <Property Name="SeyahatTuru" Type="Edm.Byte" Nullable="false"/>
                 <Property Name="BelgeTarihi" Type="Edm.Date"/>
                 <Property Name="KayitTarihi" Type="Edm.Date"/>
@@ -719,7 +719,7 @@
                         </Record>
                         <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Label" String="Avans Türü"/>
-                            <PropertyValue Property="Value" Path="AvansTuru"/>
+                            <PropertyValue Property="Value" Path="MasrafTuru"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Label" String="Yurtiçi/Dışı"/>
@@ -817,7 +817,7 @@
                         </Record>
                         <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Label" String="Avans Türü"/>
-                            <PropertyValue Property="Value" Path="AvansTuru"/>
+                            <PropertyValue Property="Value" Path="MasrafTuru"/>
                         </Record>
                         <Record Type="SAP__UI.DataField">
                             <PropertyValue Property="Label" String="Yurtiçi/Dışı"/>

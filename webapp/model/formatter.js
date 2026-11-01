@@ -14,6 +14,14 @@ sap.ui.define([], function () {
         process: function (value) { return ({A: "A · Avans", M: "M · Masraf"})[value] || value || ""; },
         area: function (value) { return ({0: "0 · Yurtiçi", 1: "1 · Yurtdışı", 2: "2 · Seyahat dışı"})[value] || value || ""; },
         result: function (value) { return value === "S" ? "Başarılı" : value === "E" ? "Hatalı" : value || ""; },
-        resultState: function (value) { return value === "S" ? "Success" : value === "E" ? "Error" : "None"; }
+        resultState: function (value) { return value === "S" ? "Success" : value === "E" ? "Error" : "None"; },
+        // Boş yıl ("0000" / 0) gösterilmez
+        year: function (value) { return !value || /^0+$/.test(String(value)) ? "" : String(value); },
+        // Belge no + yıl: "5100000012 / 2026"; belge yoksa boş
+        doc: function (belnr, gjahr) {
+            if (!belnr) { return ""; }
+            const y = !gjahr || /^0+$/.test(String(gjahr)) ? "" : " / " + gjahr;
+            return belnr + y;
+        }
     };
 });

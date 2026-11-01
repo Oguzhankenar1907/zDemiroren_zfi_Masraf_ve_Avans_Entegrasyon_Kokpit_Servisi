@@ -20,7 +20,7 @@
                         <Label text="Süreç"/>
                         <Text text="{path:'detail&gt;/header/SurecTipi', formatter:'.formatter.process'}"/>
                         <Label text="Masraf Türü"/>
-                        <Text text="{path:'detail&gt;/header/AvansTuru', formatter:'.formatter.kind'}"/>
+                        <Text text="{path:'detail&gt;/header/MasrafTuru', formatter:'.formatter.kind'}"/>
                         <Label text="Yurtiçi/Yurtdışı"/>
                         <Text text="{path:'detail&gt;/header/YurticiYurtdisi', formatter:'.formatter.area'}"/>
                         <Label text="Avans Form Numarası"/>
@@ -38,17 +38,17 @@
                         <Label text="Talep Belgesi"/>
                         <Text text="{detail&gt;/header/TalepBelge}"/>
                         <Label text="Talep Yılı"/>
-                        <Text text="{detail&gt;/header/TalepYil}"/>
+                        <Text text="{path:'detail&gt;/header/TalepYil', formatter:'.formatter.year'}"/>
                         <Label text="Ödeme Belgesi"/>
                         <Text text="{detail&gt;/header/OdemeBelge}"/>
                         <Label text="Muhasebe Belgesi"/>
                         <Text text="{detail&gt;/header/MuhasebeBelge}"/>
                         <Label text="Muhasebe Yılı"/>
-                        <Text text="{detail&gt;/header/MuhasebeYil}"/>
+                        <Text text="{path:'detail&gt;/header/MuhasebeYil', formatter:'.formatter.year'}"/>
                         <Label text="Ters Belge"/>
                         <Text text="{detail&gt;/header/TersBelge}"/>
                         <Label text="Ters Yıl"/>
-                        <Text text="{detail&gt;/header/TersYil}"/>
+                        <Text text="{path:'detail&gt;/header/TersYil', formatter:'.formatter.year'}"/>
                     </form:content>
                 </form:SimpleForm>
                 <MessageStrip text="{detail&gt;/header/HataMesaji}" type="Error" showIcon="true" visible="{= !!${detail&gt;/header/HataMesaji} }" class="sapUiSmallMarginBottom"/>

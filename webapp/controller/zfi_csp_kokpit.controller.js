@@ -1,16 +1,174 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel", "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator", "sap/ui/model/Sorter", "sap/m/MessageBox",
-    "sap/ui/core/Fragment", "com/golive/demiroren/zficspkokpit/model/formatter"
-], function (Controller, JSONModel, Filter, OP, Sorter, MessageBox, Fragment, formatter) {
+    "sap/ui/core/Fragment", "com/golive/demiroren/zficspkokpit/model/formatter", "sap/ui/core/Messaging"
+], function (Controller, JSONModel, Filter, OP, Sorter, MessageBox, Fragment, formatter, Messaging) {
     "use strict";
     return Controller.extend("com.golive.demiroren.zficspkokpit.controller.zfi_csp_kokpit", {
         formatter: formatter,
         onInit: function () {
-            this.getView().setModel(new JSONModel({ connection: "Şirket seçip formları filtreleyin." }), "ui");
+            this.getView().setModel(new JSONModel({
+                connection: "Şirket seçip formları filtreleyin.",
+                advanceSelectionEligible: false,
+                advanceBackendReady: false,
+                act: { A: {}, M: {}, E: {} }
+            }), "ui");
             this.getView().setModel(new JSONModel({ title: "", header: {}, messages: "" }), "detail");
         },
         _text: function (id) { return this.byId(id).getValue().trim(); },
+        onAvansSelectionChange: function () {
+            const eligible = this.byId("tableA").getSelectedContexts().some(context => {
+                const row = context.getObject();
+                return row.SurecTipi === "A" && ["B", "H"].includes(row.Durum) &&
+                    row.__OperationControl?.AvansTalebiOlustur === true;
+            });
+            this.getView().getModel("ui").setProperty("/advanceSelectionEligible", eligible);
+            this._updateActions("A");
+        },
+        // Aksiyon namespace'i (kokpit servisi)
+        _N: "com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001",
+        // Buton uygunluk kuralları: sekme -> aksiyon -> uygun durumlar. Kesin kontrol backend'dedir.
+        _actionRules: { SilmeKoy: ["B", "H"], SilmeKaldir: ["S"], Muhasebelestir: ["B", "H"], Virman: ["B", "H"], Giderlestir: ["V"], TersKayit: ["M"] },
+        // E-Fatura sekmesinde kurala göre farklı durumlar (KalemDurum)
+        _itemRules: { TersKayit: ["V", "G"] },
+        _ruleFor: function (key, name) { return (key === "E" && this._itemRules[name]) || this._actionRules[name] || []; },
+        // E-Fatura sekmesinde Kalem entity'sindeki aksiyon adları (Virman/Giderlestir aynı ad)
+        _itemActions: { SilmeKoy: "KalemSilmeKoy", SilmeKaldir: "KalemSilmeKaldir", TersKayit: "KalemTersKayit" },
+        _rowStatus: function (key, row) { return key === "E" ? row.KalemDurum : row.Durum; },
+        _updateActions: function (key) {
+            if (!["A", "M", "E"].includes(key)) { return; }
+            const rows = this.byId("table" + key).getSelectedContexts().map(c => c.getObject()).filter(Boolean);
+            const act = {};
+            Object.keys(this._actionRules).forEach(name => {
+                const rule = this._ruleFor(key, name);
+                act[name] = rows.some(r => rule.includes(this._rowStatus(key, r)));
+            });
+            this.getView().getModel("ui").setProperty("/act/" + key, act);
+        },
+        onRowSelectionChange: function (event) {
+            const source = event.getSource();
+            const key = ["M", "E"].find(k => this.byId("table" + k) === source);
+            this._updateActions(key);
+        },
+        onSilmeKoy: function () { this._runAction("SilmeKoy", "Silme işareti konuldu."); },
+        onSilmeKaldir: function () { this._runAction("SilmeKaldir", "Silme işareti kaldırıldı."); },
+        _confirmItemAction: function (name, question, okText) {
+            const keys = new Set(this.byId("tableE").getSelectedContexts().map(c => c.getObject())
+                .filter(r => r && this._actionRules[name].includes(r.KalemDurum)).map(r => r.AkisNumarasi + "|" + r.FaturaId));
+            MessageBox.confirm(keys.size + " " + question, {
+                onClose: action => { if (action === MessageBox.Action.OK) { this._runAction(name, okText); } }
+            });
+        },
+        onVirman: function () { this._confirmItemAction("Virman", "fatura için virman belgesi oluşturulacak. Devam edilsin mi?", "Virman yapıldı."); },
+        onGiderlestir: function () { this._confirmItemAction("Giderlestir", "fatura için giderleştirme belgesi oluşturulacak. Devam edilsin mi?", "Giderleştirildi."); },
+        // Ters Kayıt: kayıt tarihi penceresi (zorunlu, varsayılan bugün, ileri tarih yok - spec 3.6)
+        onTersKayit: function () {
+            const key = this.byId("tabs").getSelectedKey() || "A";
+            sap.ui.require(["sap/m/Dialog", "sap/m/DatePicker", "sap/m/Label", "sap/m/Button", "sap/m/Text", "sap/m/VBox"],
+                (Dialog, DatePicker, Label, Button, Text, VBox) => {
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    const picker = new DatePicker({ dateValue: today, maxDate: today, displayFormat: "dd.MM.yyyy", required: true, width: "100%" });
+                    const info = key === "E"
+                        ? "Seçili faturalarda: Giderleştirilmiş ise giderleştirme belgesi, Virman yapılmış ise virman belgesi ters kaydedilir."
+                        : "Seçili formların " + (key === "A" ? "avans talebi" : "muhasebe") + " belgesi ters kaydedilir. Bu işlem geri alınamaz.";
+                    const dialog = new Dialog({
+                        title: "Ters Kayıt",
+                        contentWidth: "24rem",
+                        content: [new VBox({ items: [new Text({ text: info }).addStyleClass("sapUiSmallMarginBottom"), new Label({ text: "Kayıt tarihi", required: true }), picker] }).addStyleClass("sapUiSmallMargin")],
+                        beginButton: new Button({
+                            text: "Ters Kaydet", type: "Emphasized",
+                            press: () => {
+                                const date = picker.getDateValue();
+                                if (!date || !picker.isValidValue()) { picker.setValueState("Error").setValueStateText("Geçerli bir tarih girin."); return; }
+                                if (date > today) { picker.setValueState("Error").setValueStateText("Kayıt tarihi bugünden ileri olamaz."); return; }
+                                dialog.close();
+                                this._runAction("TersKayit", "Ters kaydedildi.", { KayitTarihi: this._date(date) });
+                            }
+                        }),
+                        endButton: new Button({ text: "Vazgeç", press: () => dialog.close() }),
+                        afterClose: () => dialog.destroy()
+                    });
+                    this.getView().addDependent(dialog);
+                    dialog.open();
+                });
+        },
+        onMuhasebelestir: function () {
+            const count = this.byId("tableM").getSelectedContexts().filter(c => {
+                const r = c.getObject();
+                return r && this._actionRules.Muhasebelestir.includes(r.Durum);
+            }).length;
+            MessageBox.confirm(count + " masraf formu için muhasebe belgesi oluşturulacak. Devam edilsin mi?", {
+                onClose: action => { if (action === MessageBox.Action.OK) { this._runAction("Muhasebelestir", "Muhasebeleştirildi."); } }
+            });
+        },
+        // Seçili satırlar için bound aksiyonu çağırır.
+        // Avans/Masraf: Form aksiyonu, form başına bir çağrı.
+        // E-Fatura: Kalem aksiyonu (Kalem + ad), fatura (AkisNumarasi + FaturaId) başına bir çağrı;
+        // backend işlemi faturanın tüm kalemlerine uygular.
+        _runAction: async function (name, okText, params) {
+            if (this._actionRunning) { return; }
+            const key = this.byId("tabs").getSelectedKey() || "A";
+            const table = this.byId("table" + key);
+            const isItem = key === "E";
+            const action = isItem ? (this._itemActions[name] || name) : name;
+            const allowed = this._ruleFor(key, name);
+            const seen = new Set(), targets = [];
+            table.getSelectedContexts().forEach(ctx => {
+                const row = ctx.getObject();
+                if (!row || !allowed.includes(this._rowStatus(key, row))) { return; }
+                const id = isItem ? row.AkisNumarasi + "|" + row.FaturaId : String(row.AkisNumarasi);
+                if (seen.has(id)) { return; }
+                seen.add(id);
+                targets.push({ ctx: ctx, label: isItem ? "Fatura " + row.FaturaId + " (akış " + row.AkisNumarasi + ")" : "Form " + row.FormNumarasi });
+            });
+            if (!targets.length) { MessageBox.information("Seçili satırlar arasında bu işlem için uygun durumda kayıt yok."); return; }
+            this._actionRunning = true;
+            this.getView().setBusy(true);
+            const lines = [];
+            let hasError = false;
+            try {
+                for (const t of targets) {
+                    const operation = this.getView().getModel().bindContext(this._N + "." + action + "(...)", t.ctx);
+                    Object.keys(params || {}).forEach(p => operation.setParameter(p, params[p]));
+                    // Backend iş hatalarını HTTP 200 + hata mesajı olarak da dönebilir; sonuç mesajlardan okunur
+                    Messaging.removeAllMessages();
+                    try {
+                        await operation.invoke();
+                        const messages = Messaging.getMessageModel().getData();
+                        const errors = messages.filter(m => m.getType() === "Error").map(m => m.getMessage());
+                        const others = messages.filter(m => m.getType() !== "Error").map(m => m.getMessage());
+                        if (errors.length) {
+                            hasError = true;
+                            lines.push("✗ " + t.label + ": " + Array.from(new Set(errors)).join(" | "));
+                        } else {
+                            lines.push("✓ " + t.label + ": " + (others.length ? Array.from(new Set(others)).join(" | ") : okText));
+                        }
+                    } catch (error) {
+                        hasError = true;
+                        const errors = Messaging.getMessageModel().getData().filter(m => m.getType() === "Error").map(m => m.getMessage());
+                        const text = errors.length ? Array.from(new Set(errors)).join(" | ") : (error && error.message ? error.message : String(error));
+                        lines.push("✗ " + t.label + ": " + text);
+                    } finally {
+                        operation.destroy();
+                        Messaging.removeAllMessages();
+                    }
+                }
+            } finally {
+                this._actionRunning = false;
+                this.getView().setBusy(false);
+            }
+            table.removeSelections(true);
+            this._updateActions(key);
+            const binding = table.getBinding("items");
+            if (binding) { binding.refresh(); }
+            MessageBox[hasError ? "warning" : "success"](lines.join("\n"));
+        },
+        _clearAdvanceSelection: function () {
+            ["A", "M", "E"].forEach(k => this.byId("table" + k).removeSelections(true));
+            this.getView().getModel("ui").setProperty("/advanceSelectionEligible", false);
+            this.getView().getModel("ui").setProperty("/act", { A: {}, M: {}, E: {} });
+        },
         _date: function (date) {
             return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0") + "-" + String(date.getDate()).padStart(2, "0");
         },
@@ -33,7 +191,9 @@ sap.ui.define([
             const deleted = this.byId("deleted").getSelected();
             const statusFilter = (path) => {
                 const parts = [];
-                if (statuses.length) { parts.push(this._or(statuses.map(s => new Filter(path, OP.EQ, s)))); }
+                // "Silme işaretlileri getir" işaretliyse durum seçimine S de eklenir (spec 1.1)
+                const keys = deleted && statuses.length && !statuses.includes("S") ? statuses.concat("S") : statuses;
+                if (keys.length) { parts.push(this._or(keys.map(s => new Filter(path, OP.EQ, s)))); }
                 if (!deleted) { parts.push(new Filter(path, OP.NE, "S")); }
                 return parts;
             };
@@ -65,11 +225,13 @@ sap.ui.define([
             if (this._text("person") && !/^\d{11}$/.test(this._text("person"))) {
                 MessageBox.warning("TCKN 11 rakamdan oluşmalıdır."); return;
             }
+            this._clearAdvanceSelection();
             ["A", "M", "E", "R"].forEach(k => this.byId("table" + k).unbindItems());
             this._searched = true;
             this._bindActive();
         },
         onReset: function () {
+            this._clearAdvanceSelection();
             this._searched = false;
             ["company", "flow", "form", "person", "dates"].forEach(id => this.byId(id).setValue(""));
             this.byId("area").setSelectedKey("");
@@ -78,6 +240,7 @@ sap.ui.define([
             ["A", "M", "E", "R"].forEach(k => this.byId("table" + k).unbindItems());
         },
         onTabSelect: function () {
+            this._clearAdvanceSelection();
             this.byId("statuses").setSelectedKeys(this.byId("tabs").getSelectedKey() === "R" ? [] : ["B", "H"]);
             if (this._searched) { this.onSearch(); }
         },
@@ -168,7 +331,7 @@ sap.ui.define([
             const efatura = header.SurecTipi === "M" && row.Zcheck === "X";
             return Object.assign({}, row, {
                 SirketKodu: header.SirketKodu, FormNumarasi: header.FormNumarasi,
-                MasrafTuru: header.AvansTuru, MasrafTuruAciklama: formatter.kind(header.AvansTuru),
+                MasrafTuru: header.MasrafTuru, MasrafTuruAciklama: formatter.kind(header.MasrafTuru),
                 SurecTipi: header.SurecTipi, Surec: efatura ? "E" : header.SurecTipi,
                 YurticiYurtdisi: header.YurticiYurtdisi, AvansFormNumarasi: header.AvansFormNumarasi,
                 Tckn: header.Tckn, SicilNo: header.SicilNo,
