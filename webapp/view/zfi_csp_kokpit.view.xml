@@ -70,7 +70,7 @@
                     <items>
                         <IconTabFilter key="A" text="Avans">
                             <ScrollContainer width="100%" horizontal="true" vertical="false" focusable="true">
-                                <Table id="tableA" fixedLayout="false" mode="MultiSelect" selectionChange="onAvansSelectionChange" updateFinished="onAvansSelectionChange" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
+                                <Table id="tableA" fixedLayout="true" width="180rem" mode="MultiSelect" selectionChange="onAvansSelectionChange" updateFinished="onAvansSelectionChange" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
                                     <headerToolbar>
                                         <OverflowToolbar>
                                             <Button text="Avans Talebi Oluştur" enabled="{= ${ui&gt;/advanceBackendReady} &amp;&amp; ${ui&gt;/advanceSelectionEligible} }" tooltip="Backend avans aksiyonu doğrulandıktan ve arayüz çağrısı bağlandıktan sonra kullanıma açılacak; B/H durumunda uygun bir avans seçilmelidir"/>
@@ -80,45 +80,60 @@
                                         </OverflowToolbar>
                                     </headerToolbar>
                                     <columns>
-                                        <Column>
+                                        <Column width="5rem">
                                             <Text text="Şirket"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Akış"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Form"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="Durum"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Masraf Türü"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="8rem">
                                             <Text text="Belge Tarihi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="TCKN"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="7rem">
                                             <Text text="Sicil"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="14rem">
+                                            <Text text="Personel"/>
+                                        </Column>
+                                        <Column width="10rem" hAlign="End">
+                                            <Text text="Toplam Tutar"/>
+                                        </Column>
+                                        <Column width="20rem">
                                             <Text text="Mesaj"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="8rem">
                                             <Text text="Süreç Tipi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="Yurtiçi/Yurtdışı"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Avans Form Numarası"/>
+                                        </Column>
+                                        <Column width="11rem">
+                                            <Text text="Talep Belgesi"/>
+                                        </Column>
+                                        <Column width="11rem">
+                                            <Text text="Ödeme Belgesi"/>
+                                        </Column>
+                                        <Column width="11rem">
+                                            <Text text="Ters Kayıt Belgesi"/>
                                         </Column>
                                     </columns>
                                     <dependents>
-                                        <ColumnListItem id="rowA" type="Navigation">
+                                        <ColumnListItem id="rowA" type="Navigation" highlight="{= ${KontrolCriticality} === 1 ? 'Error' : 'None'}">
                                             <cells>
                                                 <Text text="{SirketKodu}"/>
                                                 <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
@@ -128,10 +143,15 @@
                                                 <Text text="{BelgeTarihi}"/>
                                                 <Text text="{Tckn}"/>
                                                 <Text text="{SicilNo}"/>
-                                                <Text text="{HataMesaji}"/>
+                                                <Text text="{parts:[{path:'PersonelKodu'},{path:'PersonelAdi'}], formatter:'.formatter.codeName'}"/>
+                                                <Text text="{parts:[{path:'ToplamTutar', targetType:'any'},{path:'ToplamParaBirimi'}], formatter:'.formatter.amount'}" wrapping="false"/>
+                                                <Text text="{parts:[{path:'HataMesaji'},{path:'KontrolMesaji'}], formatter:'.formatter.firstText'}"/>
                                                 <Text text="{path:'SurecTipi', formatter:'.formatter.process'}"/>
                                                 <Text text="{path:'YurticiYurtdisi', formatter:'.formatter.area'}"/>
                                                 <Text text="{path:'AvansFormNumarasi', targetType:'any'}" wrapping="false"/>
+                                                <Link text="{parts:[{path:'TalepBelge'},{path:'TalepYil'}], formatter:'.formatter.doc'}" press=".onDocPress($event, 'TalepBelge', 'TalepYil')" wrapping="false"/>
+                                                <Link text="{parts:[{path:'OdemeBelge'},{path:'TalepYil'}], formatter:'.formatter.doc'}" press=".onDocPress($event, 'OdemeBelge', 'TalepYil')" wrapping="false"/>
+                                                <Link text="{parts:[{path:'TersBelge'},{path:'TersYil'}], formatter:'.formatter.doc'}" press=".onDocPress($event, 'TersBelge', 'TersYil')" wrapping="false"/>
                                             </cells>
                                         </ColumnListItem>
                                     </dependents>
@@ -140,7 +160,7 @@
                         </IconTabFilter>
                         <IconTabFilter key="M" text="Masraf">
                             <ScrollContainer width="100%" horizontal="true" vertical="false" focusable="true">
-                                <Table id="tableM" fixedLayout="false" mode="MultiSelect" selectionChange="onRowSelectionChange" updateFinished="onRowSelectionChange" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
+                                <Table id="tableM" fixedLayout="true" width="169rem" mode="MultiSelect" selectionChange="onRowSelectionChange" updateFinished="onRowSelectionChange" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
                                     <headerToolbar>
                                         <OverflowToolbar>
                                             <Button text="Muhasebeleştir" icon="sap-icon://accounting-document-verification" type="Emphasized" press="onMuhasebelestir" enabled="{ui&gt;/act/M/Muhasebelestir}" tooltip="Seçili masraf formları için muhasebe belgesi oluşturur (durum B veya H olmalı)"/>
@@ -150,51 +170,57 @@
                                         </OverflowToolbar>
                                     </headerToolbar>
                                     <columns>
-                                        <Column>
+                                        <Column width="5rem">
                                             <Text text="Şirket"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Akış"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Form"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="Durum"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Masraf Türü"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="8rem">
                                             <Text text="Belge Tarihi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="TCKN"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="7rem">
                                             <Text text="Sicil"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="14rem">
+                                            <Text text="Personel"/>
+                                        </Column>
+                                        <Column width="10rem" hAlign="End">
+                                            <Text text="Toplam Tutar"/>
+                                        </Column>
+                                        <Column width="20rem">
                                             <Text text="Mesaj"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="8rem">
                                             <Text text="Süreç Tipi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="Yurtiçi/Yurtdışı"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Avans Form Numarası"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Muhasebe Belgesi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Ters Kayıt Belgesi"/>
                                         </Column>
                                     </columns>
                                     <dependents>
-                                        <ColumnListItem id="rowM" type="Navigation">
+                                        <ColumnListItem id="rowM" type="Navigation" highlight="{= ${KontrolCriticality} === 1 ? 'Error' : 'None'}">
                                             <cells>
                                                 <Text text="{SirketKodu}"/>
                                                 <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
@@ -204,12 +230,14 @@
                                                 <Text text="{BelgeTarihi}"/>
                                                 <Text text="{Tckn}"/>
                                                 <Text text="{SicilNo}"/>
-                                                <Text text="{HataMesaji}"/>
+                                                <Text text="{parts:[{path:'PersonelKodu'},{path:'PersonelAdi'}], formatter:'.formatter.codeName'}"/>
+                                                <Text text="{parts:[{path:'ToplamTutar', targetType:'any'},{path:'ToplamParaBirimi'}], formatter:'.formatter.amount'}" wrapping="false"/>
+                                                <Text text="{parts:[{path:'HataMesaji'},{path:'KontrolMesaji'}], formatter:'.formatter.firstText'}"/>
                                                 <Text text="{path:'SurecTipi', formatter:'.formatter.process'}"/>
                                                 <Text text="{path:'YurticiYurtdisi', formatter:'.formatter.area'}"/>
                                                 <Text text="{path:'AvansFormNumarasi', targetType:'any'}" wrapping="false"/>
-                                                <Text text="{parts:[{path:'MuhasebeBelge'},{path:'MuhasebeYil'}], formatter:'.formatter.doc'}" wrapping="false"/>
-                                                <Text text="{parts:[{path:'TersBelge'},{path:'TersYil'}], formatter:'.formatter.doc'}" wrapping="false"/>
+                                                <Link text="{parts:[{path:'MuhasebeBelge'},{path:'MuhasebeYil'}], formatter:'.formatter.doc'}" press=".onDocPress($event, 'MuhasebeBelge', 'MuhasebeYil')" wrapping="false"/>
+                                                <Link text="{parts:[{path:'TersBelge'},{path:'TersYil'}], formatter:'.formatter.doc'}" press=".onDocPress($event, 'TersBelge', 'TersYil')" wrapping="false"/>
                                             </cells>
                                         </ColumnListItem>
                                     </dependents>
@@ -218,7 +246,7 @@
                         </IconTabFilter>
                         <IconTabFilter key="E" text="E-Fatura Masrafları">
                             <ScrollContainer width="100%" horizontal="true" vertical="false" focusable="true">
-                                <Table id="tableE" fixedLayout="false" mode="MultiSelect" selectionChange="onRowSelectionChange" updateFinished="onRowSelectionChange" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
+                                <Table id="tableE" fixedLayout="true" width="282rem" mode="MultiSelect" selectionChange="onRowSelectionChange" updateFinished="onRowSelectionChange" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
                                     <headerToolbar>
                                         <OverflowToolbar>
                                             <Button text="Virman Yap" icon="sap-icon://journey-change" type="Emphasized" press="onVirman" enabled="{ui&gt;/act/E/Virman}" tooltip="Seçili faturalar için virman belgesi oluşturur (durum B veya H olmalı)"/>
@@ -229,81 +257,99 @@
                                         </OverflowToolbar>
                                     </headerToolbar>
                                     <columns>
-                                        <Column>
+                                        <Column width="5rem">
                                             <Text text="Şirket"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Akış"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Form"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="14rem">
                                             <Text text="Fatura"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="4rem">
                                             <Text text="Sıra"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="Durum"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="8rem" hAlign="End">
                                             <Text text="Tutar"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="6rem">
                                             <Text text="Para Birimi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="10rem">
                                             <Text text="Masraf Tanımı"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="8rem">
                                             <Text text="Masraf Yeri"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="14rem">
                                             <Text text="Açıklama"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="20rem">
                                             <Text text="Mesaj"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Masraf Türü"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="8rem">
                                             <Text text="Süreç Tipi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="Yurtiçi/Yurtdışı"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Avans Form Numarası"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="7rem">
                                             <Text text="Masraf Tipi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="10rem">
                                             <Text text="PYP"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="6rem">
                                             <Text text="KDV (%)"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="E-Fatura Carisi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
+                                            <Text text="Ana Hesap"/>
+                                        </Column>
+                                        <Column width="5rem">
+                                            <Text text="Vergi"/>
+                                        </Column>
+                                        <Column width="9rem" hAlign="End">
+                                            <Text text="Net Tutar"/>
+                                        </Column>
+                                        <Column width="9rem" hAlign="End">
+                                            <Text text="KDV Tutarı"/>
+                                        </Column>
+                                        <Column width="9rem" hAlign="End">
+                                            <Text text="KKEG Tutarı"/>
+                                        </Column>
+                                        <Column width="16rem">
+                                            <Text text="E-Fatura Satıcısı"/>
+                                        </Column>
+                                        <Column width="9rem">
                                             <Text text="Virman Belgesi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="6rem">
                                             <Text text="Virman Yılı"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="Gider Belgesi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="6rem">
                                             <Text text="Gider Yılı"/>
                                         </Column>
                                     </columns>
                                     <dependents>
-                                        <ColumnListItem id="rowE" type="Navigation">
+                                        <ColumnListItem id="rowE" type="Navigation" highlight="{= ${KontrolCriticality} === 1 ? 'Error' : 'None'}">
                                             <cells>
                                                 <Text text="{_Header/SirketKodu}"/>
                                                 <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
@@ -316,7 +362,7 @@
                                                 <Text text="{MasrafTipiTanim}"/>
                                                 <Text text="{MasrafYeri}"/>
                                                 <Text text="{Aciklama}"/>
-                                                <Text text="{parts:[{path:'Zcheck'},{path:'HataMesaji'},{path:'_Header/HataMesaji'}], formatter:'.formatter.itemValue'}"/>
+                                                <Text text="{parts:[{path:'Zcheck'},{path:'HataMesaji'},{path:'_Header/HataMesaji'},{path:'KontrolMesaji'}], formatter:'.formatter.itemMsg'}"/>
                                                 <Text text="{path:'_Header/MasrafTuru', formatter:'.formatter.kind'}"/>
                                                 <Text text="{path:'_Header/SurecTipi', formatter:'.formatter.process'}"/>
                                                 <Text text="{path:'_Header/YurticiYurtdisi', formatter:'.formatter.area'}"/>
@@ -325,9 +371,15 @@
                                                 <Text text="{PYPKodu}"/>
                                                 <Text text="{KdvOrani}"/>
                                                 <Text text="{EfaturaCari}"/>
-                                                <Text text="{VirmanBelge}"/>
+                                                <Text text="{AnaHesap}"/>
+                                                <Text text="{VergiGostergesi}"/>
+                                                <Text text="{parts:[{path:'NetTutar', targetType:'any'},{path:'AnaHesap'}], formatter:'.formatter.numberIf'}" wrapping="false"/>
+                                                <Text text="{parts:[{path:'KdvTutari', targetType:'any'},{path:'AnaHesap'}], formatter:'.formatter.numberIf'}" wrapping="false"/>
+                                                <Text text="{parts:[{path:'KkegTutari', targetType:'any'},{path:'AnaHesap'}], formatter:'.formatter.numberIf'}" wrapping="false"/>
+                                                <Text text="{parts:[{path:'SaticiKodu'},{path:'SaticiAdi'}], formatter:'.formatter.codeName'}"/>
+                                                <Link text="{VirmanBelge}" press=".onDocPress($event, 'VirmanBelge', 'VirmanYil')"/>
                                                 <Text text="{VirmanYil}"/>
-                                                <Text text="{GiderBelge}"/>
+                                                <Link text="{GiderBelge}" press=".onDocPress($event, 'GiderBelge', 'GiderYil')"/>
                                                 <Text text="{GiderYil}"/>
                                             </cells>
                                         </ColumnListItem>
@@ -337,83 +389,101 @@
                         </IconTabFilter>
                         <IconTabFilter key="R" text="Raporlama">
                             <ScrollContainer width="100%" horizontal="true" vertical="false" focusable="true">
-                                <Table id="tableR" fixedLayout="false" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
+                                <Table id="tableR" fixedLayout="true" width="282rem" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
                                     <columns>
-                                        <Column>
+                                        <Column width="5rem">
                                             <Text text="Şirket"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Akış"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Form"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="14rem">
                                             <Text text="Fatura"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="4rem">
                                             <Text text="Sıra"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="Durum"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="8rem" hAlign="End">
                                             <Text text="Tutar"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="6rem">
                                             <Text text="Para Birimi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="10rem">
                                             <Text text="Masraf Tanımı"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="8rem">
                                             <Text text="Masraf Yeri"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="14rem">
                                             <Text text="Açıklama"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="20rem">
                                             <Text text="Mesaj"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Masraf Türü"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="8rem">
                                             <Text text="Süreç Tipi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="Yurtiçi/Yurtdışı"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="11rem">
                                             <Text text="Avans Form Numarası"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="7rem">
                                             <Text text="Masraf Tipi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="10rem">
                                             <Text text="PYP"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="6rem">
                                             <Text text="KDV (%)"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="E-Fatura Carisi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
+                                            <Text text="Ana Hesap"/>
+                                        </Column>
+                                        <Column width="5rem">
+                                            <Text text="Vergi"/>
+                                        </Column>
+                                        <Column width="9rem" hAlign="End">
+                                            <Text text="Net Tutar"/>
+                                        </Column>
+                                        <Column width="9rem" hAlign="End">
+                                            <Text text="KDV Tutarı"/>
+                                        </Column>
+                                        <Column width="9rem" hAlign="End">
+                                            <Text text="KKEG Tutarı"/>
+                                        </Column>
+                                        <Column width="16rem">
+                                            <Text text="E-Fatura Satıcısı"/>
+                                        </Column>
+                                        <Column width="9rem">
                                             <Text text="Virman Belgesi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="6rem">
                                             <Text text="Virman Yılı"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="9rem">
                                             <Text text="Gider Belgesi"/>
                                         </Column>
-                                        <Column>
+                                        <Column width="6rem">
                                             <Text text="Gider Yılı"/>
                                         </Column>
                                     </columns>
                                     <dependents>
-                                        <ColumnListItem id="rowR" type="Navigation">
+                                        <ColumnListItem id="rowR" type="Navigation" highlight="{= ${KontrolCriticality} === 1 ? 'Error' : 'None'}">
                                             <cells>
                                                 <Text text="{_Header/SirketKodu}"/>
                                                 <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
@@ -426,7 +496,7 @@
                                                 <Text text="{MasrafTipiTanim}"/>
                                                 <Text text="{MasrafYeri}"/>
                                                 <Text text="{Aciklama}"/>
-                                                <Text text="{parts:[{path:'Zcheck'},{path:'HataMesaji'},{path:'_Header/HataMesaji'}], formatter:'.formatter.itemValue'}"/>
+                                                <Text text="{parts:[{path:'Zcheck'},{path:'HataMesaji'},{path:'_Header/HataMesaji'},{path:'KontrolMesaji'}], formatter:'.formatter.itemMsg'}"/>
                                                 <Text text="{path:'_Header/MasrafTuru', formatter:'.formatter.kind'}"/>
                                                 <Text text="{path:'_Header/SurecTipi', formatter:'.formatter.process'}"/>
                                                 <Text text="{path:'_Header/YurticiYurtdisi', formatter:'.formatter.area'}"/>
@@ -435,9 +505,15 @@
                                                 <Text text="{PYPKodu}"/>
                                                 <Text text="{KdvOrani}"/>
                                                 <Text text="{EfaturaCari}"/>
-                                                <Text text="{VirmanBelge}"/>
+                                                <Text text="{AnaHesap}"/>
+                                                <Text text="{VergiGostergesi}"/>
+                                                <Text text="{parts:[{path:'NetTutar', targetType:'any'},{path:'AnaHesap'}], formatter:'.formatter.numberIf'}" wrapping="false"/>
+                                                <Text text="{parts:[{path:'KdvTutari', targetType:'any'},{path:'AnaHesap'}], formatter:'.formatter.numberIf'}" wrapping="false"/>
+                                                <Text text="{parts:[{path:'KkegTutari', targetType:'any'},{path:'AnaHesap'}], formatter:'.formatter.numberIf'}" wrapping="false"/>
+                                                <Text text="{parts:[{path:'SaticiKodu'},{path:'SaticiAdi'}], formatter:'.formatter.codeName'}"/>
+                                                <Link text="{VirmanBelge}" press=".onDocPress($event, 'VirmanBelge', 'VirmanYil')"/>
                                                 <Text text="{VirmanYil}"/>
-                                                <Text text="{GiderBelge}"/>
+                                                <Link text="{GiderBelge}" press=".onDocPress($event, 'GiderBelge', 'GiderYil')"/>
                                                 <Text text="{GiderYil}"/>
                                             </cells>
                                         </ColumnListItem>

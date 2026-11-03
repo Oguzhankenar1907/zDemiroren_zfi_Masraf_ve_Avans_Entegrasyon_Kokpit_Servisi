@@ -137,7 +137,7 @@ sap.ui.define([
                         await operation.invoke();
                         const messages = Messaging.getMessageModel().getData();
                         const errors = messages.filter(m => m.getType() === "Error").map(m => m.getMessage());
-                        const others = messages.filter(m => m.getType() !== "Error").map(m => m.getMessage());
+                        const others = messages.filter(m => m.getType() !== "Error" && this._isOwnMessage(m)).map(m => m.getMessage());
                         if (errors.length) {
                             hasError = true;
                             lines.push("✗ " + t.label + ": " + Array.from(new Set(errors)).join(" | "));
@@ -163,6 +163,37 @@ sap.ui.define([
             const binding = table.getBinding("items");
             if (binding) { binding.refresh(); }
             MessageBox[hasError ? "warning" : "success"](lines.join("\n"));
+        },
+        // Faz 5: Fiori Launchpad adresi (yalnız uygulama launchpad dışında, ör. VS Code önizlemesinde çalışırken kullanılır).
+        // Örnek: "https://my123456.s4hana.cloud.sap/ui". Launchpad içinde çalışırken boş kalabilir.
+        _FLP_URL: "",
+        // Belge numarasına tıklanınca belge Manage Journal Entries'te yeni sekmede açılır.
+        onDocPress: function (event, belnrField, gjahrField, fromDetail) {
+            const obj = fromDetail ? this.getView().getModel("detail").getProperty("/header")
+                : event.getSource().getBindingContext().getObject();
+            const belnr = obj && obj[belnrField];
+            if (!belnr) { return; }
+            const header = obj.SirketKodu ? obj : (obj._Header || {});
+            const gjahr = obj[gjahrField];
+            const doc = String(belnr).replace(/^0+/, "");
+            const hash = "AccountingDocument-manageV2&/C_ManageJournalEntryTP(CompanyCode='" + header.SirketKodu +
+                "',FiscalYear='" + gjahr + "',AccountingDocument='" + doc + "')";
+            const inFlp = !!(window.sap && window.sap.ushell && window.sap.ushell.Container);
+            const base = inFlp ? window.location.href.split("#")[0] : this._FLP_URL;
+            if (!base) {
+                MessageBox.information("Belge: " + doc + " / " + gjahr + " (şirket " + header.SirketKodu + ")\n\n" +
+                    "Uygulama launchpad dışında çalıştığı için belge açılamıyor. Manage Journal Entries'te bu numarayla arayabilirsiniz.");
+                return;
+            }
+            window.open(base + "#" + hash, "_blank");
+        },
+        // Başarı/uyarı mesajlarından yalnız kokpitin kendi mesajları (ZFI_MSR) gösterilir.
+        // Muhasebe belgesi servisinin kendi bilgi mesajı ("Document posted successfully: BKPFF ...") gizlenir.
+        // Hata mesajları filtrelenmez.
+        _isOwnMessage: function (m) {
+            const code = (m.getCode && m.getCode()) || "";
+            if (code) { return code.indexOf("ZFI_MSR") === 0; }
+            return !/BKPFF|Document posted successfully/i.test(m.getMessage() || "");
         },
         _clearAdvanceSelection: function () {
             ["A", "M", "E"].forEach(k => this.byId("table" + k).removeSelections(true));

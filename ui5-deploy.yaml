@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+# Yayın (deploy) ayarı: uygulama geliştirme sistemine (client 80) ZFI paketine yüklenir.
+specVersion: "4.0"
+metadata:
+  name: com.golive.demiroren.zficspkokpit
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        ignoreCertErrors: false
+        target:
+          url: https://my440403-api.s4hana.cloud.sap
+          authenticationType: reentranceTicket
+        app:
+          name: ZFI_CSP_KOKPIT
+          description: CSP Personel Avans ve Masraf Kokpiti
+          package: ZFI
+          transport: HMXK900409
+        exclude:
+          - /test/
+          - /localService/

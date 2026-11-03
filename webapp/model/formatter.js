@@ -15,6 +15,24 @@ sap.ui.define([], function () {
         area: function (value) { return ({0: "0 · Yurtiçi", 1: "1 · Yurtdışı", 2: "2 · Seyahat dışı"})[value] || value || ""; },
         result: function (value) { return value === "S" ? "Başarılı" : value === "E" ? "Hatalı" : value || ""; },
         resultState: function (value) { return value === "S" ? "Success" : value === "E" ? "Error" : "None"; },
+        // Faz 3: hesaplanan alanlar
+        // Kod + ad: "1000000 · Gamze Personel"
+        codeName: function (code, name) { return code ? code + (name ? " · " + name : "") : ""; },
+        // Tutar: 1.800,00 (+ para birimi)
+        number: function (value) {
+            if (value === null || value === undefined || value === "") { return ""; }
+            const n = Number(value);
+            return isNaN(n) ? String(value) : n.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        },
+        // Hesap bulunamadıysa tutar hesaplanmamıştır: 0,00 yerine boş gösterilir
+        numberIf: function (value, account) { return account && value !== null && value !== undefined && value !== "" && !isNaN(Number(value)) ? Number(value).toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ""; },
+        amount: function (value, currency) {
+            const text = (value === null || value === undefined || value === "") ? "" : (isNaN(Number(value)) ? String(value) : Number(value).toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            return text && currency ? text + " " + currency : text;
+        },
+        // İşlem hatası varsa o, yoksa ön kontrol mesajı
+        firstText: function (error, check) { return error || check || ""; },
+        itemMsg: function (flag, item, header, check) { return (flag === "X" ? item : header) || check || ""; },
         // Boş yıl ("0000" / 0) gösterilmez
         year: function (value) { return !value || /^0+$/.test(String(value)) ? "" : String(value); },
         // Belge no + yıl: "5100000012 / 2026"; belge yoksa boş

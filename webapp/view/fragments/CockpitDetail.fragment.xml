@@ -30,23 +30,29 @@
                         <Text text="{detail&gt;/header/Tckn}"/>
                         <Label text="Sicil"/>
                         <Text text="{detail&gt;/header/SicilNo}"/>
+                        <Label text="Personel"/>
+                        <Text text="{parts:[{path:'detail&gt;/header/PersonelKodu'},{path:'detail&gt;/header/PersonelAdi'}], formatter:'.formatter.codeName'}"/>
+                        <Label text="Toplam Tutar"/>
+                        <Text text="{parts:[{path:'detail&gt;/header/ToplamTutar'},{path:'detail&gt;/header/ToplamParaBirimi'}], formatter:'.formatter.amount'}"/>
+                        <Label text="Kontrol"/>
+                        <ObjectStatus text="{detail&gt;/header/KontrolMesaji}" state="{= ${detail&gt;/header/KontrolCriticality} === 1 ? 'Error' : 'None'}"/>
                         <Label text="Belge Tarihi"/>
                         <Text text="{detail&gt;/header/BelgeTarihi}"/>
                         <Label text="Kayıt Tarihi"/>
                         <Text text="{detail&gt;/header/KayitTarihi}"/>
                         <core:Title text="Muhasebe Belgeleri"/>
                         <Label text="Talep Belgesi"/>
-                        <Text text="{detail&gt;/header/TalepBelge}"/>
+                        <Link text="{detail&gt;/header/TalepBelge}" press=".onDocPress($event, 'TalepBelge', 'TalepYil', true)"/>
                         <Label text="Talep Yılı"/>
                         <Text text="{path:'detail&gt;/header/TalepYil', formatter:'.formatter.year'}"/>
                         <Label text="Ödeme Belgesi"/>
-                        <Text text="{detail&gt;/header/OdemeBelge}"/>
+                        <Link text="{detail&gt;/header/OdemeBelge}" press=".onDocPress($event, 'OdemeBelge', 'TalepYil', true)"/>
                         <Label text="Muhasebe Belgesi"/>
-                        <Text text="{detail&gt;/header/MuhasebeBelge}"/>
+                        <Link text="{detail&gt;/header/MuhasebeBelge}" press=".onDocPress($event, 'MuhasebeBelge', 'MuhasebeYil', true)"/>
                         <Label text="Muhasebe Yılı"/>
                         <Text text="{path:'detail&gt;/header/MuhasebeYil', formatter:'.formatter.year'}"/>
                         <Label text="Ters Belge"/>
-                        <Text text="{detail&gt;/header/TersBelge}"/>
+                        <Link text="{detail&gt;/header/TersBelge}" press=".onDocPress($event, 'TersBelge', 'TersYil', true)"/>
                         <Label text="Ters Yıl"/>
                         <Text text="{path:'detail&gt;/header/TersYil', formatter:'.formatter.year'}"/>
                     </form:content>
@@ -55,7 +61,7 @@
                 <Text text="{detail&gt;/messages}"/>
                 <Title text="Kalemler" class="sapUiSmallMarginTop sapUiSmallMarginBottom" level="H3"/>
                 <ScrollContainer width="100%" horizontal="true" vertical="false" focusable="true">
-                    <Table id="detailItems" growing="true" growingThreshold="50" width="301rem" fixedLayout="true" noDataText="Kayıt bulunamadı.">
+                    <Table id="detailItems" growing="true" growingThreshold="50" width="358rem" fixedLayout="true" noDataText="Kayıt bulunamadı.">
                         <columns>
                             <Column width="7rem">
                                 <Text text="Şirket" wrapping="false"/>
@@ -111,6 +117,24 @@
                             <Column width="11rem">
                                 <Text text="E-Fatura Carisi" wrapping="false"/>
                             </Column>
+                            <Column width="9rem">
+                                <Text text="Ana Hesap" wrapping="false"/>
+                            </Column>
+                            <Column width="5rem">
+                                <Text text="Vergi" wrapping="false"/>
+                            </Column>
+                            <Column width="9rem" hAlign="End">
+                                <Text text="Net Tutar" wrapping="false"/>
+                            </Column>
+                            <Column width="9rem" hAlign="End">
+                                <Text text="KDV Tutarı" wrapping="false"/>
+                            </Column>
+                            <Column width="9rem" hAlign="End">
+                                <Text text="KKEG Tutarı" wrapping="false"/>
+                            </Column>
+                            <Column width="16rem">
+                                <Text text="E-Fatura Satıcısı" wrapping="false"/>
+                            </Column>
                             <Column width="11rem">
                                 <Text text="Virman Belgesi" wrapping="false"/>
                             </Column>
@@ -131,7 +155,7 @@
                             </Column>
                         </columns>
                         <dependents>
-                            <ColumnListItem id="detailRow" vAlign="Middle">
+                            <ColumnListItem id="detailRow" vAlign="Middle" highlight="{= ${KontrolCriticality} === 1 ? 'Error' : 'None'}">
                                 <cells>
                                     <Text text="{_Header/SirketKodu}"/>
                                     <Text text="{path:'AkisNumarasi', targetType:'any'}" wrapping="false"/>
@@ -144,13 +168,19 @@
                                     <Text text="{MasrafTipiTanim}"/>
                                     <Text text="{MasrafYeri}"/>
                                     <Text text="{Aciklama}" maxLines="3" tooltip="{Aciklama}"/>
-                                    <Text text="{parts:[{path:'Zcheck'},{path:'HataMesaji'},{path:'_Header/HataMesaji'}], formatter:'.formatter.itemValue'}" maxLines="3" tooltip="{HataMesaji}"/>
+                                    <Text text="{parts:[{path:'Zcheck'},{path:'HataMesaji'},{path:'_Header/HataMesaji'},{path:'KontrolMesaji'}], formatter:'.formatter.itemMsg'}" maxLines="3"/>
                                     <Text text="{MasrafTipi}"/>
                                     <Text text="{PYPKodu}"/>
                                     <Text text="{KdvOrani}"/>
                                     <Text text="{AracGiderTuru}"/>
                                     <Text text="{Zcheck}"/>
                                     <Text text="{EfaturaCari}"/>
+                                    <Text text="{AnaHesap}"/>
+                                    <Text text="{VergiGostergesi}"/>
+                                    <Text text="{parts:[{path:'NetTutar', targetType:'any'},{path:'AnaHesap'}], formatter:'.formatter.numberIf'}"/>
+                                    <Text text="{parts:[{path:'KdvTutari', targetType:'any'},{path:'AnaHesap'}], formatter:'.formatter.numberIf'}"/>
+                                    <Text text="{parts:[{path:'KkegTutari', targetType:'any'},{path:'AnaHesap'}], formatter:'.formatter.numberIf'}"/>
+                                    <Text text="{parts:[{path:'SaticiKodu'},{path:'SaticiAdi'}], formatter:'.formatter.codeName'}"/>
                                     <Text text="{VirmanBelge}"/>
                                     <Text text="{VirmanYil}"/>
                                     <Text text="{GiderBelge}"/>
