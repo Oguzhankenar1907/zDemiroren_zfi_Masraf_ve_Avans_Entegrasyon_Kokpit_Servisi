@@ -28,7 +28,7 @@ sap.ui.define([
         // Aksiyon namespace'i (kokpit servisi)
         _N: "com.sap.gateway.srvd.zui_fi_csp_kokpit_o4.v0001",
         // Buton uygunluk kuralları: sekme -> aksiyon -> uygun durumlar. Kesin kontrol backend'dedir.
-        _actionRules: { SilmeKoy: ["B", "H"], SilmeKaldir: ["S"], Muhasebelestir: ["B", "H"], Virman: ["B", "H"], Giderlestir: ["V"], TersKayit: ["M"] },
+        _actionRules: { AvansTalebiOlustur: ["B", "H"], SilmeKoy: ["B", "H"], SilmeKaldir: ["S"], Muhasebelestir: ["B", "H"], Virman: ["B", "H"], Giderlestir: ["V"], TersKayit: ["M"] },
         // E-Fatura sekmesinde kurala göre farklı durumlar (KalemDurum)
         _itemRules: { TersKayit: ["V", "G"] },
         _ruleFor: function (key, name) { return (key === "E" && this._itemRules[name]) || this._actionRules[name] || []; },
@@ -92,6 +92,16 @@ sap.ui.define([
                     this.getView().addDependent(dialog);
                     dialog.open();
                 });
+        },
+        // Faz 4: avans talebi (SOAP). Yalnız Avans sekmesi, durum B/H.
+        onAvansTalebi: function () {
+            const count = this.byId("tableA").getSelectedContexts().filter(c => {
+                const r = c.getObject();
+                return r && this._actionRules.AvansTalebiOlustur.includes(r.Durum);
+            }).length;
+            MessageBox.confirm(count + " avans formu için avans talebi (peşinat talebi) oluşturulacak. Devam edilsin mi?", {
+                onClose: action => { if (action === MessageBox.Action.OK) { this._runAction("AvansTalebiOlustur", "Avans talebi oluşturuldu."); } }
+            });
         },
         onMuhasebelestir: function () {
             const count = this.byId("tableM").getSelectedContexts().filter(c => {
@@ -173,7 +183,7 @@ sap.ui.define([
                 : event.getSource().getBindingContext().getObject();
             const belnr = obj && obj[belnrField];
             if (!belnr) { return; }
-            const header = obj.SirketKodu ? obj : (obj._Header || {});
+            const header = obj.SirketKodu ? obj : (obj._Header || this.getView().getModel("detail").getProperty("/header") || {});
             const gjahr = obj[gjahrField];
             const doc = String(belnr).replace(/^0+/, "");
             const hash = "AccountingDocument-manageV2&/C_ManageJournalEntryTP(CompanyCode='" + header.SirketKodu +

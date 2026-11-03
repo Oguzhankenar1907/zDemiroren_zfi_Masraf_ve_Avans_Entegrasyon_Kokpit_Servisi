@@ -4,7 +4,6 @@
         <content>
             <VBox width="100%">
                 <MessageStrip text="{ui&gt;/connection}" showIcon="true"/>
-                <MessageStrip text="Avans Talebi Oluştur, SOAP entegrasyonu tamamlanana kadar devre dışıdır." type="Warning" showIcon="true"/>
                 <Panel headerText="Filtreler" expandable="true" expanded="true" backgroundDesign="Solid">
                     <layout:Grid defaultSpan="XL3 L3 M6 S12" hSpacing="2" vSpacing="1">
                         <VBox>
@@ -73,7 +72,7 @@
                                 <Table id="tableA" fixedLayout="true" width="180rem" mode="MultiSelect" selectionChange="onAvansSelectionChange" updateFinished="onAvansSelectionChange" growing="true" growingThreshold="50" itemPress="onDetail" noDataText="Şirket seçip filtreleyin. Sonuç yoksa filtreleri kontrol edin.">
                                     <headerToolbar>
                                         <OverflowToolbar>
-                                            <Button text="Avans Talebi Oluştur" enabled="{= ${ui&gt;/advanceBackendReady} &amp;&amp; ${ui&gt;/advanceSelectionEligible} }" tooltip="Backend avans aksiyonu doğrulandıktan ve arayüz çağrısı bağlandıktan sonra kullanıma açılacak; B/H durumunda uygun bir avans seçilmelidir"/>
+                                            <Button text="Avans Talebi Oluştur" icon="sap-icon://create-form" press="onAvansTalebi" enabled="{ui&gt;/act/A/AvansTalebiOlustur}" tooltip="Seçili avans formları için peşinat talebi (ÖDK F) oluşturur (durum Bekliyor veya Hatalı olmalı)"/>
                                             <Button text="Ters Kayıt" icon="sap-icon://undo" press="onTersKayit" enabled="{ui&gt;/act/A/TersKayit}" tooltip="Seçili formların belgesini ters kaydeder (durum Muhasebeleşti olmalı)"/>
                                             <Button text="Silme İşareti Koy" icon="sap-icon://delete" press="onSilmeKoy" enabled="{ui&gt;/act/A/SilmeKoy}" tooltip="Seçili kayıtlara silme işareti koyar (durum B veya H olmalı)"/>
                                             <Button text="Silmeyi Kaldır" icon="sap-icon://undo" press="onSilmeKaldir" enabled="{ui&gt;/act/A/SilmeKaldir}" tooltip="Silme işaretini kaldırır, kayıt önceki durumuna döner (durum S olmalı)"/>
